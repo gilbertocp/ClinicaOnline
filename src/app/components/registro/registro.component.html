@@ -1,0 +1,20 @@
+<mat-card class="login-card">
+  <img mat-card-image src="/assets/img/cruz-roja.png" width="200" height="350" alt="Login">
+  <mat-card-content>
+    <form class="form">
+      <mat-form-field class="inputtxt">
+        <mat-label>Correo</mat-label>
+        <input matInput name="correo" id="correo" [(ngModel)]="correo">
+      </mat-form-field>
+    
+      <mat-form-field class="inputtxt">
+        <mat-label>Contraseña</mat-label>
+        <input matInput name="clave" id="clave" [(ngModel)]="clave">
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" type="submit" class="submit-btn">Registrarse</button> 
+  </mat-card-actions>
+  <a routerLink="/iniciarSesion" class="form-link">Desea Iniciar Sesión ?</a>
+</mat-card>
