@@ -1,20 +1,38 @@
 <mat-card class="login-card">
-  <img mat-card-image src="/assets/img/clinica.png" width="200" height="350" alt="Login">
+  <mat-card-title class="login-card-title">
+    Iniciar Sesión
+  </mat-card-title>
+  <mat-divider></mat-divider>
   <mat-card-content>
     <form class="form">
-      <mat-form-field class="inputtxt">
-        <mat-label>Correo</mat-label>
-        <input matInput name="correo" id="correo" [(ngModel)]="correo">
+      <mat-form-field appearance="fill" class="inputtxt">
+        <mat-label>Ingrese email</mat-label>
+        <input matInput type="email" name="correo" id="correo" [(ngModel)]="correo">
       </mat-form-field>
     
-      <mat-form-field class="inputtxt">
-        <mat-label>Contraseña</mat-label>
-        <input matInput name="clave" id="clave" [(ngModel)]="clave">
+      <mat-form-field appearance="fill" class="inputtxt">
+        <mat-label>Ingrese contraseña</mat-label>
+        <input matInput name="clave" id="clave" [(ngModel)]="clave" [type]="ocultar ? 'password' : 'text'">
+        <button mat-icon-button type="button" matSuffix (click)="ocultar = !ocultar">
+        <mat-icon>{{ocultar ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="inputtxt">
+        <mat-label>Seleccione un usuario (Optativo)</mat-label>
+        <mat-select (selectionChange)="usuarioSeleccionado($event)">
+          <mat-option value="profesional">Profesional</mat-option>
+          <mat-option value="paciente">Paciente</mat-option>
+          <mat-option value="administrador">Administrador</mat-option>
+        </mat-select>
       </mat-form-field>
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" type="submit" class="submit-btn">Iniciar Sesión</button> 
+    <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="enEspera" (click)="iniciarSesion()">
+      {{enEspera? 'Ingresando al sistema' : 'Enviar' }}
+    </button> 
+    <mat-progress-bar *ngIf="enEspera" mode="indeterminate"></mat-progress-bar>
   </mat-card-actions>
   <a routerLink="/registrarse" class="form-link">Desea Registrarse ?</a>
 </mat-card>

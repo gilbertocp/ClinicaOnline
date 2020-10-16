@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { first, switchMap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, of } from 'rxjs';
-import { User } from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Usuario } from '../models/usuario';
+import { User } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  public user$: Observable<User>;
+  public user$: Observable<Usuario>;
 
   constructor(
     private afAuth: AngularFireAuth, 
@@ -38,7 +39,7 @@ export class AuthService {
     return this.afAuth.signOut();
   }
 
-  getCurrentUser(): Promise<firebase.User> {
-    return this.afAuth.authState.pipe(first()).toPromise();
+  getCurrentUser(): Observable<firebase.User> {
+    return this.afAuth.authState.pipe(first());
   }
 }

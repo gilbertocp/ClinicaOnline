@@ -1,7 +1,16 @@
 .login-card {
-  margin: 120px auto auto auto;
+  margin: 0px auto;
+  margin-top: 22px;
   max-width: 490px;
   padding: 44px;
+  border-radius: 69px;
+}
+
+.login-card-title {
+  text-align: center;
+  font-size: 46px;
+  color: var(--text-color-dark);
+  margin-bottom: 46px;
 }
 
 .form {
@@ -16,6 +25,7 @@
 
 .submit-btn {
   width: 100%;
+  background-color:var(--primary-color);
 }
 
 .form-link {
@@ -23,5 +33,5 @@
 }
 
 .form-link:visited {
-  color: blue;
+  color: var(--secondary-color);
 }

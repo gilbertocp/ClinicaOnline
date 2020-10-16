@@ -9,6 +9,7 @@ export class RegistroComponent implements OnInit {
 
   correo: string;
   clave: string;
+  ocultar = true;
 
   constructor() { }
 

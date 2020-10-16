@@ -14,13 +14,21 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { ErrorComponent } from './components/error/error.component';
 import { FormsModule } from '@angular/forms';
+import { AdminComponent } from './components/admin/admin.component';
+import { PacienteComponent } from './components/paciente/paciente.component';
+import { ProfesionalComponent } from './components/profesional/profesional.component';
+import { InicioComponent } from './components/inicio/inicio.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegistroComponent,
-    ErrorComponent
+    ErrorComponent,
+    AdminComponent,
+    PacienteComponent,
+    ProfesionalComponent,
+    InicioComponent
   ],
   imports: [
     BrowserModule,

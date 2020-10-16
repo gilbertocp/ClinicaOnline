@@ -1,12 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 
 // html, body { height: 100%; }
+
+:root {
+  --primary-color: #4834d4;
+  --secondary-color: #686de0;
+  --tertiary-color:#be2edd;
+  --text-color: #dff9fb;
+  --text-color-dark: #000000
+}
+
 * {
   margin: 0; 
   padding: 0; 
   box-sizing: border-box;
 }
+
 body { 
+  background-image: url('assets/img/cruz-roja.png');
+  background-repeat: no-repeat;
   background-color: blue;
   font-family: Roboto, "Helvetica Neue", sans-serif; 
 }

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,10 +12,53 @@ export class LoginComponent implements OnInit {
 
   correo: string;
   clave: string;
+  errMsj: string;
+  ocultar = true;
+  enEspera = false;
 
-  constructor() { }
+  constructor(
+    private authSvc: AuthService,
+    private router: Router,
+    private _snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  usuarioSeleccionado(e: any) {
+    switch(e.value) {
+      case 'administrador':
+        this.correo = 'admin@admin.com';
+        this.clave = 'admin1234';
+      break;
+
+      case 'profesional':
+        this.correo = 'profesional@profesional.com';
+        this.clave = 'profesional1234';
+      break;
+
+      case 'paciente':
+        this.correo = 'paciente@paciente.com';
+        this.clave = 'paciente1234';
+      break;
+    }
+  }
+
+  iniciarSesion(): void {
+    this.enEspera = true;
+
+    this.authSvc.login(this.correo, this.clave).then(() => {
+      localStorage.setItem('login_user_clinica_online', Math.random().toString(36).slice(-8));
+      this.router.navigate(['inicio']);
+    })
+    .catch(() => {
+      this._snackBar.open('No se ha podido iniciar sesión, verifique que el usuario y la clave sean correctos', 'Cerrar', {
+        duration: 3000
+      });
+    })
+    .finally(() => {
+      this.enEspera = false;
+    });
   }
 
 }
