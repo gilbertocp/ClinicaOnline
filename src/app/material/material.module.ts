@@ -23,7 +23,7 @@ const ANGULAR_MATERIAL_MODULES = [
   MatSnackBarModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
-  MatDividerModule
+  MatDividerModule,
 ];
 
 @NgModule({
