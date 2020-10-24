@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { map } from 'rxjs/operators';
@@ -13,7 +13,9 @@ export class CheckLoginGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     return this.authSvc.getCurrentUser().pipe(map(user => {
-      if(user)  return true;
+      if(user)  {
+        return true;
+      }
 
       this.router.navigate(['/login']);
       return false;

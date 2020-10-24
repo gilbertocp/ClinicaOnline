@@ -14,13 +14,52 @@
         <mat-label>Ingrese contraseña</mat-label>
         <input matInput name="clave" id="clave" [(ngModel)]="clave" [type]="ocultar ? 'password' : 'text'">
         <button mat-icon-button matSuffix (click)="ocultar = !ocultar" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="ocultar">
-        <mat-icon>{{ocultar ? 'visibility_off' : 'visibility'}}</mat-icon>
+          <mat-icon>{{ocultar ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field>
+      
+      <mat-radio-group name="perfil" id="perfil" [(ngModel)]="perfil">
+        <mat-radio-button value="profesional">Profesional</mat-radio-button>
+        <mat-radio-button value="paciente">Paciente</mat-radio-button>
+      </mat-radio-group>
+
+      <div *ngIf="perfil === 'paciente'">
+        <input #inputFile hidden="true" type="file" multiple onclick="this.value=null" (change)="imagenesSubidas($event)" accept="image/*"/>
+        <button class="inputFile" mat-raised-button color="primary" style="margin-top: 30px;" (click)="inputFile.click()">Subir Imagenes</button>
+
+        <div class="filesUploaded">
+          <button mat-button color="primary" (click)="imagenes = []">Deshacer imagenes subidas  <mat-icon>delete</mat-icon></button>
+          <div class="filesUploaded-text"><b>{{imagenes.length}}</b> Imagenes Subidas</div>
+        </div>
+      </div>
+
+      <div *ngIf="perfil === 'profesional'">
+        <mat-list *ngIf="especialidades">
+          <mat-list-item *ngFor="let especialidad of especialidades">
+            <mat-icon matListIcon>start_rate</mat-icon>
+            <p matLine>
+              <span>{{especialidad}}</span>
+            </p>
+            <button (click)="eliminarEspecialidad(especialidad)" style="right: 0;" mat-button>
+              Eliminar
+            </button>
+          </mat-list-item>
+        </mat-list>
+          <mat-form-field appearance="fill" class="inputtxt">
+            <mat-label>Ingrese especialidad</mat-label>
+            <input type="text" name="especialidad" id="especialidad" [(ngModel)]="especialidad" matInput>
+          </mat-form-field>
+          <button (click)="agregarEspecialidad($event)" style="left: 50%;transform: translateX(-50%);" mat-fab>
+            <mat-icon>add</mat-icon>
+          </button>
+      </div>
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" type="submit" class="submit-btn">Enviar</button> 
+    <button mat-raised-button color="primary" [disabled]="enEspera" class="submit-btn" (click)="registrar()">
+      {{enEspera? 'Cargando. . .' :'Enviar'}}
+    </button> 
+    <mat-progress-bar *ngIf="enEspera" style="width: 100%;" mode="indeterminate"></mat-progress-bar>
   </mat-card-actions>
   <a routerLink="/iniciarSesion" class="form-link">Desea Iniciar Sesión ?</a>
 </mat-card>

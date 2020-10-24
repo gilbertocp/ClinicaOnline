@@ -49,10 +49,10 @@ export class LoginComponent implements OnInit {
 
     this.authSvc.login(this.correo, this.clave).then(() => {
       localStorage.setItem('login_user_clinica_online', Math.random().toString(36).slice(-8));
-      this.router.navigate(['inicio']);
+      this.router.navigate(['perfil']);
     })
     .catch(() => {
-      this._snackBar.open('No se ha podido iniciar sesión, verifique que el usuario y la clave sean correctos', 'Cerrar', {
+      this._snackBar.open('No se ha podido iniciar sesión, verifique que el usuario y la clave sean correctos', 'X', {
         duration: 3000
       });
     })

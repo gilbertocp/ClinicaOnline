@@ -36,3 +36,30 @@
 .form-link:visited {
   color:var(--primary-color);
 }
+
+.inputFile {
+  width: 100%;
+  background-color: var(--primary-color);
+}
+
+.filesUploaded {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.filesUploaded-text {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.fab-btn-container {
+  display: block;
+  border: 1px solid black;
+}

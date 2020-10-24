@@ -11,6 +11,12 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatListModule} from '@angular/material/list';
+
 
 const ANGULAR_MATERIAL_MODULES = [
   MatCardModule,
@@ -24,6 +30,11 @@ const ANGULAR_MATERIAL_MODULES = [
   MatProgressBarModule,
   MatProgressSpinnerModule,
   MatDividerModule,
+  MatCheckboxModule,
+  MatRadioModule,
+  MatExpansionModule,
+  MatDatepickerModule,
+  MatListModule
 ];
 
 @NgModule({

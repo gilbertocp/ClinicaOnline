@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CheckAdminGuard } from './check-admin.guard';
+import { ProfesionalGuard } from './profesional.guard';
 
-describe('CheckAdminGuard', () => {
-  let guard: CheckAdminGuard;
+describe('ProfesionalGuard', () => {
+  let guard: ProfesionalGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(CheckAdminGuard);
+    guard = TestBed.inject(ProfesionalGuard);
   });
 
   it('should be created', () => {

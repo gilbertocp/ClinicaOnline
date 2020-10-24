@@ -7,18 +7,22 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CheckPacienteGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
 
-  constructor(private authSvc: AuthService, private router: Router) { }
-
+  constructor(
+    private authSvc: AuthService, 
+    private router: Router
+  ) { }
+  
   canActivate(): Observable<boolean> {
     return this.authSvc.user$.pipe(map(user => {
-      if(user.perfil === 'paciente') 
+      if(user.perfil === 'administrador') 
         return true;
 
+      console.log('Access Denied');
       this.router.navigate(['/inicio']);
       return false;  
-    }));
+    }));;
   }
   
 }

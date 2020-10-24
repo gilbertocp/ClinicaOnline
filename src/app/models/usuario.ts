@@ -1,5 +1,9 @@
 export interface Usuario {
-  correo: string;
-  clave: string;
-  perfil: string;
+  docId?: string,
+  correo: string,
+  clave: string,
+  imagenes?: any,
+  perfil: string,
+  especialidades?: any,
+  habilitado: boolean
 }

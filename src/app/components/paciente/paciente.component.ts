@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-paciente',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PacienteComponent implements OnInit {
 
-  constructor() { }
+  userFirebase$;
+
+  constructor(
+    public authSvc: AuthService
+  ) { }
 
   ngOnInit(): void {
+    this.userFirebase$ = this.authSvc.getCurrentUser();
   }
 
 }

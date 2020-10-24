@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CheckProfesionalGuard } from './check-profesional.guard';
+import { PacienteGuard } from './paciente.guard';
 
-describe('CheckProfesionalGuard', () => {
-  let guard: CheckProfesionalGuard;
+describe('PacienteGuard', () => {
+  let guard: PacienteGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(CheckProfesionalGuard);
+    guard = TestBed.inject(PacienteGuard);
   });
 
   it('should be created', () => {

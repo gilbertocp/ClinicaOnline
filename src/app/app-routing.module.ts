@@ -7,11 +7,11 @@ import { AdminComponent } from './components/admin/admin.component';
 import { PacienteComponent } from './components/paciente/paciente.component';
 import { ProfesionalComponent } from './components/profesional/profesional.component';
 import { InicioComponent } from './components/inicio/inicio.component';
-import { CheckPerfilGuard } from './guards/check-perfil.guard';
 import { CheckLoginGuard } from './guards/check-login.guard';
-import { CheckAdminGuard } from './guards/check-admin.guard';
-import { CheckPacienteGuard } from './guards/check-paciente.guard';
-import { CheckProfesionalGuard } from './guards/check-profesional.guard';
+import { PerfilGuard } from './guards/perfil.guard';
+import { AdminGuard } from './guards/admin.guard';
+import { PacienteGuard } from './guards/paciente.guard';
+import { ProfesionalGuard } from './guards/profesional.guard';
 
 const routes: Routes = [
   {
@@ -27,29 +27,29 @@ const routes: Routes = [
     component: RegistroComponent
   },
   {
-    path: 'inicio',
+    path: 'perfil',
     component: InicioComponent,
     canActivate: [CheckLoginGuard],
     children: [
       {
         path: '',
-        canActivate: [CheckPerfilGuard],
-        component: InicioComponent
+        component: InicioComponent,
+        canActivate: [PerfilGuard]
       },
       {
         path: 'admin',
         component: AdminComponent,
-        canActivate: [CheckAdminGuard]
+        canActivate: [AdminGuard]
       },
       {
         path: 'paciente',
         component: PacienteComponent,
-        canActivate: [CheckPacienteGuard]
+        canActivate: [PacienteGuard]
       },
       {
         path: 'profesional',
         component: ProfesionalComponent,
-        canActivate: [CheckProfesionalGuard]
+        canActivate: [ProfesionalGuard]
       }
     ]
   },
