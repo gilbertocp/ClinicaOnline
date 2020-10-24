@@ -18,6 +18,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { PacienteComponent } from './components/paciente/paciente.component';
 import { ProfesionalComponent } from './components/profesional/profesional.component';
 import { InicioComponent } from './components/inicio/inicio.component';
+import { NoAutorizadoModalComponent } from './components/no-autorizado-modal/no-autorizado-modal.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { InicioComponent } from './components/inicio/inicio.component';
     AdminComponent,
     PacienteComponent,
     ProfesionalComponent,
-    InicioComponent
+    InicioComponent,
+    NoAutorizadoModalComponent
   ],
   imports: [
     BrowserModule,

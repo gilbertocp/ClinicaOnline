@@ -46,8 +46,9 @@ export class AuthService {
     return this.afAuth.createUserWithEmailAndPassword(email, password);
   }
 
-  logout(): Promise<void> {
-    return this.afAuth.signOut();
+  logout(): void {
+    localStorage.removeItem('login_user_clinica_online');
+    this.afAuth.signOut();
   }
 
   getCurrentUser(): Observable<firebase.User> {
