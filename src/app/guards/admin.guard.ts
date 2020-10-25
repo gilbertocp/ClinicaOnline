@@ -20,7 +20,7 @@ export class AdminGuard implements CanActivate {
         return true;
 
       console.log('Access Denied');
-      this.router.navigate(['/inicio']);
+      this.router.navigate(['/perfil']);
       return false;  
     }));;
   }

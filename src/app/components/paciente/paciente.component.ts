@@ -16,8 +16,8 @@ export class PacienteComponent implements OnInit {
   paciente;
 
   constructor(
-    public authSvc: AuthService,
-    public dialog: MatDialog,
+    private authSvc: AuthService,
+    private dialog: MatDialog,
     private router: Router
   ) { }
 

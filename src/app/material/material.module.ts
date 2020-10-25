@@ -20,6 +20,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatTabsModule} from '@angular/material/tabs';
 
 const ANGULAR_MATERIAL_MODULES = [
   MatCardModule,
@@ -41,7 +42,8 @@ const ANGULAR_MATERIAL_MODULES = [
   MatDialogModule,
   MatToolbarModule,
   MatMenuModule,
-  MatGridListModule
+  MatGridListModule,
+  MatTabsModule
 ];
 
 @NgModule({

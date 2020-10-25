@@ -1,1 +1,21 @@
-<p>profesional works!</p>
+<mat-toolbar class="nav">
+  <span class="nav__brand">
+    Clínica Online
+    <img src="assets/img/cruz-roja.png" width="40" height="40" alt="img">
+  </span>
+  <span class="example-spacer"></span>
+  <button *ngIf="paciente" mat-raised-button class="userbtn" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <div class="userbtn__wrapper">
+      <span>{{paciente.correo}}</span>
+      <mat-icon style="font-size: 30px;margin-bottom: 5px;">person</mat-icon>
+    </div>
+  </button>
+</mat-toolbar>
+
+
+<mat-menu style="font-size: 30px;" #menu="matMenu">
+  <button mat-menu-item (click)="cerrarSesion()">
+    <mat-icon>sensor_door</mat-icon>
+    <span>Cerrar Sesión</span>
+  </button>
+</mat-menu>

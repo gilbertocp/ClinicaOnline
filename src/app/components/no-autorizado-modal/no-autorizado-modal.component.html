@@ -1,6 +1,21 @@
-<div *ngIf="data.emailVerificacion">
-    <p style="font-size: 13px">
+<div *ngIf="data.emailVerificacion" class="modal">
+    <mat-icon class="modal__icon">email</mat-icon> <br>
+    <p class="modal__text">
         Se ha enviado un email de confirmación a <b>{{data.email}}</b> <br>
-        Por favor verifique el buzón de entrada y haga click en el link para verificar su correo electrónico
+        Para ingresar al sistema por favor verifique el buzón de entrada y haga click en el link para verificar su correo electrónico
     </p>
+    <button mat-raised-button color="primary" class="modal__btn" [disabled]="solicitudEnviada" (click)="cerrarSesion()">
+        Cerrar Sesión
+    </button>
+</div>
+
+<div *ngIf="!data.emailVerificacion" class="modal">
+    <mat-icon class="modal__icon">warning</mat-icon> <br>
+    <p class="modal__text">
+        El usuario <b>{{data.email}}</b> necesita ser aprobado para ingresar en el sistema<br>
+        Contactese con un administrador para que pueda ser aprobado.        
+    </p>
+    <button mat-raised-button color="primary" class="modal__btn" [disabled]="solicitudEnviada" (click)="enviarSolicitud()">
+        {{ solicitudEnviada ? 'Solicitud enviada':'Enviar solicitud de aprobación'}}
+    </button>
 </div>

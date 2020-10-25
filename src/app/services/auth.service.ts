@@ -22,8 +22,8 @@ export class AuthService {
         if (user) {
           return this.db.collection<Usuario>('usuarios').doc(user.uid).snapshotChanges().pipe(
             filter(actions => {
-            return actions.payload.id === user.uid;
-            }),
+              return actions.payload.id === user.uid;
+            }), 
             map(actions => {
               const obj: Usuario = {
                 docId: actions.payload.id,

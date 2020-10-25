@@ -5,5 +5,5 @@ export interface Usuario {
   imagenes?: any,
   perfil: string,
   especialidades?: any,
-  habilitado: boolean
+  habilitado?: boolean
 }
