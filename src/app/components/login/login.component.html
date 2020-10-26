@@ -26,6 +26,8 @@
           <mat-option value="administrador">Administrador</mat-option>
         </mat-select>
       </mat-form-field>
+
+      <re-captcha (resolved)="captchaVerificado = true" [siteKey]="siteKey"></re-captcha>
     </form>
   </mat-card-content>
   <mat-card-actions>

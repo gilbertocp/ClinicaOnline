@@ -19,6 +19,7 @@ import { PacienteComponent } from './components/paciente/paciente.component';
 import { ProfesionalComponent } from './components/profesional/profesional.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { NoAutorizadoModalComponent } from './components/no-autorizado-modal/no-autorizado-modal.component';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { NoAutorizadoModalComponent } from './components/no-autorizado-modal/no-
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    RecaptchaModule
   ],
   providers: [],
   bootstrap: [AppComponent]

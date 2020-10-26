@@ -4,8 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../services/auth.service';
 import { firestore } from 'firebase/app';
 import { UsuariosService } from '../../services/usuarios.service';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-registro',
@@ -22,6 +22,8 @@ export class RegistroComponent implements OnInit {
   especialidades: string[] = [];
   ocultar = true;
   enEspera = false;
+  siteKey = environment.captchaKey;
+  captchaVerificado: boolean = false;
   @ViewChild('inputFile', {static: false}) inputFile: ElementRef;
 
   constructor(
@@ -29,14 +31,21 @@ export class RegistroComponent implements OnInit {
     private storage: AngularFireStorage,
     private _snackBar: MatSnackBar,
     private usuariosSvc: UsuariosService,
-    public dialog: MatDialog,
     private router: Router
-  ) { }
+  ) { } 
 
   ngOnInit(): void {
   }
 
   registrar() {
+    if(!this.captchaVerificado) {
+      this._snackBar.open('Por favor verifique el captcha', 'X', {
+        duration: 2000
+      });
+      return;
+    }
+
+
     if(this.perfil === 'paciente' && this.imagenes.length !== 2) {
       this._snackBar.open('Tiene que subir dos fotos', 'X', {
         duration: 2000
@@ -98,12 +107,18 @@ export class RegistroComponent implements OnInit {
 
         }).catch(err => {
           console.log(err.message);
+          
         }).finally(() => {
           this.enEspera = false;
         });
       }
+    }).catch(() =>  {
+      this._snackBar.open('No se ha podido registrar el usuario, por favor verifique que los valores ingresados sean validos', 'X', {
+        duration: 3000
+      });
+    }).finally(() => {
+      this.enEspera = false;
     });
-  
   }
 
   imagenesSubidas({currentTarget}): void {

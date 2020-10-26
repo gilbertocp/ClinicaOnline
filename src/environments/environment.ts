@@ -12,7 +12,8 @@ export const environment = {
     storageBucket: "clinicaonline-4cda1.appspot.com",
     messagingSenderId: "512228768996",
     appId: "1:512228768996:web:f5d4cfbdcad4ebda9200f1"
-  }
+  },
+  captchaKey: '6LeRuNsZAAAAAPQh9o3Z_K9kXwrX7iFmlKT1ZJBt'
 };
 
 /*

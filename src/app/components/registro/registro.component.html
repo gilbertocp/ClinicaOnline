@@ -53,6 +53,10 @@
             <mat-icon>add</mat-icon>
           </button>
       </div>
+      
+      <div style="margin-top: 15px;">
+        <re-captcha #captcha (resolved)="captchaVerificado = true" [siteKey]="siteKey"></re-captcha>
+      </div>
     </form>
   </mat-card-content>
   <mat-card-actions>

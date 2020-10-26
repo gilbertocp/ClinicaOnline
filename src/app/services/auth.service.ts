@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { filter, first, map, switchMap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, of } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Usuario } from '../models/usuario';
-import { User } from 'firebase';
+import { User } from 'firebase/app';
+import * as firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
@@ -58,4 +59,5 @@ export class AuthService {
   sendEmailVerification(firebaseUser: User): Promise<void> {
     return firebaseUser.sendEmailVerification();
   }
+  
 }
