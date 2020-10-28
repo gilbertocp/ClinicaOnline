@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { Profesional } from 'src/app/models/profesional';
+import { Solicitud } from 'src/app/models/solicitud';
 import { AuthService } from 'src/app/services/auth.service';
-import { NoAutorizadoModalComponent } from '../no-autorizado-modal/no-autorizado-modal.component';
+import { ProfesionalService } from 'src/app/services/profesional.service';
+import { SolicitudesService } from 'src/app/services/solicitudes.service';
 
 @Component({
   selector: 'app-profesional',
@@ -12,45 +13,39 @@ import { NoAutorizadoModalComponent } from '../no-autorizado-modal/no-autorizado
 })
 export class ProfesionalComponent implements OnInit {
 
-  paciente;
-  dialogRef;
+  profesional: Profesional;
+  modalBtn: HTMLButtonElement;
+  solicitudAprobacion$: Observable<Solicitud[]>;
   
   constructor(
     private authSvc: AuthService,
-    private dialog: MatDialog,
-    private router: Router
+    private profesionalSvc: ProfesionalService,
+    private solicitudesSvc: SolicitudesService
   ) { }
 
   ngOnInit(): void {
-    this.authSvc.user$.pipe(take(1)).subscribe(user => {
-      console.log('Mi usuario => ',user);
+    this.authSvc.getCurrentUserData('profesional').subscribe(profesional => {
+      this.profesional = profesional[0];
+      console.log(this.profesional);
       
-      if(!user.habilitado) {
-        this.dialogRef = this.dialog.open(NoAutorizadoModalComponent, {
-          width: '600px',
-          data: {
-            emailVerificacion: false,
-            email: user.correo,
-            docId: user.docId
-          },
-          disableClose: true
-        });
-      }
-
-      if(user.habilitado) {
-        if(this.dialogRef) {
-          this.dialogRef.close();
+      if(!this.profesional.habilitado) {
+        if(!this.modalBtn) {
+          this.modalBtn = document.querySelector('#modal-launcher') as HTMLButtonElement;
+          this.modalBtn.click();
+        }
+      } else {
+        if(this.modalBtn) {
+          this.modalBtn.click();
+          this.modalBtn = null;
         }
       }
-    });
 
-    this.authSvc.user$.subscribe(user => {
-      this.paciente = user;
+      this.solicitudAprobacion$ = this.solicitudesSvc.getSolicitud(this.profesional.docId);
     });
   }
 
-  cerrarSesion(): void {
-    this.authSvc.logout();
-    this.router.navigate(['/iniciarSesion']);
+  enviarSolicitud(): void {
+    const {correo, docId} = this.profesional;
+    this.profesionalSvc.enviarSolicitudAprobacion(docId, correo);
   }
 } 

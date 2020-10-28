@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Solicitud } from '../models/solicitud';
-import { Usuario } from '../models/usuario';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminService {
+export class SolicitudesService {
 
   constructor(private db: AngularFirestore) { }
 
@@ -19,20 +18,4 @@ export class AdminService {
     return this.db.collection<Solicitud>('solicitudes_profesionales').valueChanges({idField: 'docId'});
   }
 
-  aprobarSolicitud(solicitud: Solicitud): void {
-    this.db.collection('profesionales').doc(solicitud.profesionalDocId).set(
-      { habilitado: true },
-      { merge: true}
-    );
-
-    this.db.collection('solicitudes_profesionales').doc(solicitud.docId).delete();
-  }
-
-  rechazarSolicitud(solicitud: Solicitud): void {
-    this.db.collection('solicitudes_profesionales').doc(solicitud.docId).delete();
-  }
-
-  registrarAdministradorId(docId: string,admin: Usuario): void {
-    this.db.collection('usuarios').doc(docId).set(admin);
-  }
 }

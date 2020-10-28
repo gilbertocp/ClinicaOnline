@@ -6,6 +6,8 @@ import { firestore } from 'firebase/app';
 import { UsuariosService } from '../../services/usuarios.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { ProfesionalService } from 'src/app/services/profesional.service';
+import { PacienteService } from 'src/app/services/paciente.service';
 
 @Component({
   selector: 'app-registro',
@@ -23,41 +25,44 @@ export class RegistroComponent implements OnInit {
   ocultar = true;
   enEspera = false;
   siteKey = environment.captchaKey;
-  captchaVerificado: boolean = false;
+  // cambiado a true para debuggear
+  captchaVerificado: boolean = true;
   @ViewChild('inputFile', {static: false}) inputFile: ElementRef;
 
   constructor(
     private authSvc: AuthService, 
     private storage: AngularFireStorage,
-    private _snackBar: MatSnackBar,
     private usuariosSvc: UsuariosService,
+    private profesionalesSvc: ProfesionalService,
+    private pacientesSvc: PacienteService,
     private router: Router
   ) { } 
 
   ngOnInit(): void {
   }
 
+  cambiado() {
+    console.log(this.perfil);
+  }
+
   registrar() {
-    if(!this.captchaVerificado) {
-      this._snackBar.open('Por favor verifique el captcha', 'X', {
-        duration: 2000
-      });
+    if(!this.perfil) {
+      this.mostrarAlert('Tiene que especificar el tipo de perfil a registrar', 2000);
       return;
     }
 
+    if(!this.captchaVerificado) {
+      this.mostrarAlert('Verifique el captcha primero', 2000);
+      return;
+    }
 
     if(this.perfil === 'paciente' && this.imagenes.length !== 2) {
-      this._snackBar.open('Tiene que subir dos fotos', 'X', {
-        duration: 2000
-      });
+      this.mostrarAlert('Tiene que subir dos fotos para ingresar', 2000);
       return;
     }
 
-
     if(this.perfil === 'profesional' && this.especialidades.length === 0 ) {
-      this._snackBar.open('Debe agregar al menos una especialidad', 'X', {
-        duration: 2000
-      });
+      this.mostrarAlert('Tiene que agregar al menos una especialidad', 2000);
       return;
     }
 
@@ -69,9 +74,14 @@ export class RegistroComponent implements OnInit {
         this.usuariosSvc.addUsuarioWithId(cred.user.uid,{
           correo: this.correo,
           clave: this.clave,
-          especialidades: firestore.FieldValue.arrayUnion(...this.especialidades),
-          habilitado: false,
           perfil: 'profesional'
+        });
+
+        this.profesionalesSvc.guardarProfesional({
+          especialidades: firestore.FieldValue.arrayUnion(...this.especialidades),
+          docIdUsuario: cred.user.uid,
+          correo: this.correo,
+          habilitado: false
         });
 
         this.enEspera = false;
@@ -93,31 +103,31 @@ export class RegistroComponent implements OnInit {
             {
               correo: this.correo,
               clave: this.clave,
-              imagenes : firestore.FieldValue.arrayUnion(
-                await tasks[0].ref.getDownloadURL(),
-                await tasks[1].ref.getDownloadURL()
-              ),
-              habilitado: false,
               perfil: 'paciente'
             }
           );
 
+          this.pacientesSvc.guardarPaciente({
+            correo: this.correo,
+            docIdUsuario: cred.user.uid,
+            imagenes: firestore.FieldValue.arrayUnion(
+              await tasks[0].ref.getDownloadURL(),
+              await tasks[1].ref.getDownloadURL()
+            ),
+          });
+
+          this.enEspera = false;
           this.authSvc.sendEmailVerification(cred.user);
           this.router.navigate(['perfil']);
 
         }).catch(err => {
           console.log(err.message);
-          
-        }).finally(() => {
-          this.enEspera = false;
         });
       }
     }).catch(() =>  {
-      this._snackBar.open('No se ha podido registrar el usuario, por favor verifique que los valores ingresados sean validos', 'X', {
-        duration: 3000
-      });
-    }).finally(() => {
       this.enEspera = false;
+
+      this.mostrarAlert('No se ha podido registrar el usuario, por favor verifique que los campos ingresados sean correctos', 3000);
     });
   }
 
@@ -138,6 +148,13 @@ export class RegistroComponent implements OnInit {
 
   eliminarEspecialidad(especialidad: string): void {
     this.especialidades.splice(this.especialidades.indexOf(especialidad), 1);    
+  }
+
+  mostrarAlert(errMsj: string, duracion: number = 1000): void {
+    const alert = document.querySelector('#alert-form');
+    document.querySelector('#alert-text').innerHTML = errMsj;
+    alert.classList.add('show');
+    setTimeout(() => alert.classList.remove('show'), duracion);
   }
 
 }

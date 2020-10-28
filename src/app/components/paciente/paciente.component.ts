@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { User } from 'firebase';
+import { Observable } from 'rxjs';
+import { Paciente } from 'src/app/models/paciente';
 import { AuthService } from 'src/app/services/auth.service';
-import { NoAutorizadoModalComponent } from '../no-autorizado-modal/no-autorizado-modal.component';
 
 @Component({
   selector: 'app-paciente',
@@ -11,46 +11,20 @@ import { NoAutorizadoModalComponent } from '../no-autorizado-modal/no-autorizado
 })
 export class PacienteComponent implements OnInit {
 
-  userFirebase$;
-  dialogRef;
-  paciente;
+  paciente: Paciente;
+  authUser$: Observable<User>;
 
   constructor(
     private authSvc: AuthService,
-    private dialog: MatDialog,
-    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.authSvc.getCurrentUser().subscribe(user => {
-      
-      if(user.emailVerified) {
-        if(this.dialogRef) {
-          this.dialogRef.close();
-          this.dialogRef = null;
-        }
-      }
-
-      if(!user.emailVerified) {
-        this.dialogRef = this.dialog.open(NoAutorizadoModalComponent, {
-          width: '600px',
-          data: {
-            emailVerificacion: true,
-            email: user.email,
-          },
-          disableClose: true
-        });
-      }
+    this.authSvc.getCurrentUserData('paciente').subscribe(user => {
+      this.paciente = user[0];  
+      console.log(this.paciente);
     });
 
-    this.authSvc.user$.subscribe(user => {
-      this.paciente = user;
-    });
+    this.authUser$ = this.authSvc.getCurrentUser();
   }
 
-
-  cerrarSesion(): void {
-    this.authSvc.logout();
-    this.router.navigate(['/iniciarSesion']);
-  }
 }

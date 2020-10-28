@@ -1,21 +1,31 @@
-<mat-toolbar class="nav">
-  <span class="nav__brand">
-    Clínica Online
-    <img src="assets/img/cruz-roja.png" width="40" height="40" alt="img">
-  </span>
-  <span class="example-spacer"></span>
-  <button *ngIf="paciente" mat-raised-button class="userbtn" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-    <div class="userbtn__wrapper">
-      <span>{{paciente.correo}}</span>
-      <mat-icon style="font-size: 30px;margin-bottom: 5px;">person</mat-icon>
+<app-navbar></app-navbar>
+
+<div class="container">
+  
+</div>
+
+
+<!-- Button trigger modal -->
+<button type="button" id="modal-launcher" hidden="true" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Acceso Denegado</h5>
+      </div>
+      <div class="modal-body">
+        Usted tiene que estar autorizado por un administrador para navegar en el sistema,
+        Envie una solicitud de aprobación para continuar
+      </div>
+      <div class="modal-footer" *ngIf="solicitudAprobacion$ | async as solicitud">
+        <button type="button" class="btn btn-primary btn-block" [disabled]="solicitud.length === 1" (click)="enviarSolicitud()">
+          {{solicitud.length === 1 ? 'Solicitud Enviada':'Enviar solicitud de aprobación'}}
+        </button>
+      </div>
     </div>
-  </button>
-</mat-toolbar>
-
-
-<mat-menu style="font-size: 30px;" #menu="matMenu">
-  <button mat-menu-item (click)="cerrarSesion()">
-    <mat-icon>sensor_door</mat-icon>
-    <span>Cerrar Sesión</span>
-  </button>
-</mat-menu>
+  </div>
+</div>

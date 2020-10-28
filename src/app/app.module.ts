@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material/material.module';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -18,8 +17,8 @@ import { AdminComponent } from './components/admin/admin.component';
 import { PacienteComponent } from './components/paciente/paciente.component';
 import { ProfesionalComponent } from './components/profesional/profesional.component';
 import { InicioComponent } from './components/inicio/inicio.component';
-import { NoAutorizadoModalComponent } from './components/no-autorizado-modal/no-autorizado-modal.component';
 import { RecaptchaModule } from 'ng-recaptcha';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -31,14 +30,13 @@ import { RecaptchaModule } from 'ng-recaptcha';
     PacienteComponent,
     ProfesionalComponent,
     InicioComponent,
-    NoAutorizadoModalComponent
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    MaterialModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,

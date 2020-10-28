@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../environments/environment';
@@ -13,61 +12,64 @@ export class LoginComponent implements OnInit {
 
   correo: string;
   clave: string;
-  errMsj: string;
   ocultar = true;
   enEspera = false;
   siteKey = environment.captchaKey;
-  captchaVerificado: boolean = false;
+  // cambiado a true para debuggear
+  captchaVerificado: boolean = true;
 
   constructor(
     private authSvc: AuthService,
     private router: Router,
-    private _snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
   }
 
-  usuarioSeleccionado(e: any) {
-    switch(e.value) {
+  usuarioSeleccionado({currentTarget}) {
+    switch(currentTarget.value) {
       case 'administrador':
         this.correo = 'admin@admin.com';
-        this.clave = 'admin1234';
+        this.clave = '111111';
       break;
 
       case 'profesional':
         this.correo = 'profesional@profesional.com';
-        this.clave = 'profesional1234';
+        this.clave = '111111';
       break;
 
       case 'paciente':
-        this.correo = 'paciente@paciente.com';
-        this.clave = 'paciente1234';
+        this.correo = 'enynovil-4989@yopmail.com';
+        this.clave = '222222';
       break;
     }
   }
 
   iniciarSesion(): void {
-    
+
     if(!this.captchaVerificado) {
-      this._snackBar.open('Por favor verifique el captcha', 'X', {
-        duration: 2000
-      });
+      this.mostrarAlert('Tiene que verificar el captcha primero', 2500);
       return;
     }
+
+    this.enEspera = true;
 
     this.authSvc.login(this.correo, this.clave).then(() => {
       localStorage.setItem('login_user_clinica_online', Math.random().toString(36).slice(-8));
       this.router.navigate(['perfil']);
     })
     .catch(() => {
-      this._snackBar.open('No se ha podido iniciar sesión, verifique que el usuario y la clave sean correctos', 'X', {
-        duration: 3000
-      });
-    })
-    .finally(() => {
       this.enEspera = false;
+      this.mostrarAlert('No se ha podio iniciar sesión, por favor verifique que los campos sean correctos', 2500);
     });
+  
+  }
+
+  mostrarAlert(errMsj: string, duracion: number = 1000): void {
+    const alert = document.querySelector('#alert-form');
+    document.querySelector('#alert-text').innerHTML = errMsj;
+    alert.classList.add('show');
+    setTimeout(() => alert.classList.remove('show'), duracion);
   }
 
 }

@@ -1,40 +1,46 @@
-<mat-card class="login-card">
-  <mat-card-title class="login-card-title">
-    Iniciar Sesión
-  </mat-card-title>
-  <mat-divider></mat-divider>
-  <mat-card-content>
-    <form class="form">
-      <mat-form-field appearance="fill" class="inputtxt">
-        <mat-label>Ingrese email</mat-label>
-        <input matInput type="email" name="correo" id="correo" [(ngModel)]="correo">
-      </mat-form-field>
+<div class="container">
+  <div class="mx-auto p-3 mt-3 bg-primary">
+    <div class="d-flex justify-content-center align-items-center border-dark">
+      <img src="assets/img/cruz-roja.png" class="" width="250" height="250" alt="img">
+      <span style="font-size: 100px;" class="text-white" id="title">Clínica Online</span>
+    </div>
     
-      <mat-form-field appearance="fill" class="inputtxt">
-        <mat-label>Ingrese contraseña</mat-label>
-        <input matInput name="clave" id="clave" [(ngModel)]="clave" [type]="ocultar ? 'password' : 'text'">
-        <button mat-icon-button type="button" matSuffix (click)="ocultar = !ocultar">
-        <mat-icon>{{ocultar ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-      </mat-form-field>
+    <div class="card-body">
+      <div class="form-group">
+        <input type="text" name="correo" id="correo" [(ngModel)]="correo" placeholder="Correo" class="form-control rounded-pill">
+      </div>
+  
+      <div class="form-group">
+        <input type="password" name="clave" id="clave" [(ngModel)]="clave" placeholder="Clave" class="form-control rounded-pill">
+      </div>
 
-      <mat-form-field appearance="fill" class="inputtxt">
-        <mat-label>Seleccione un usuario (Optativo)</mat-label>
-        <mat-select (selectionChange)="usuarioSeleccionado($event)">
-          <mat-option value="profesional">Profesional</mat-option>
-          <mat-option value="paciente">Paciente</mat-option>
-          <mat-option value="administrador">Administrador</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <div class="form-group">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle rounded-pill" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Usuarios
+          </button>
+          <div class="dropdown-menu">
+            <button class="dropdown-item" value="administrador" (click)="usuarioSeleccionado($event)" type="button">Administrador</button>
+            <button class="dropdown-item" value="profesional" (click)="usuarioSeleccionado($event)" type="button">Profesional</button>
+            <button class="dropdown-item" value="paciente" (click)="usuarioSeleccionado($event)" type="button">Paciente</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer bg-primary">
+    <button type="submit" class="btn btn-secondary btn-block rounded-pill" [disabled]="enEspera" (click)="iniciarSesion()">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="enEspera"></span>
+      {{enEspera?'Cargando. . .':'Iniciar Sesión'}}
+    </button> <br>
+    <a routerLink="/registrarse" class="text-dark">Desea registrarse?</a>
+  </div>
+</div>
 
-      <re-captcha (resolved)="captchaVerificado = true" [siteKey]="siteKey"></re-captcha>
-    </form>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="enEspera" (click)="iniciarSesion()">
-      {{enEspera? 'Ingresando al sistema' : 'Enviar' }}
-    </button> 
-    <mat-progress-bar *ngIf="enEspera" mode="indeterminate"></mat-progress-bar>
-  </mat-card-actions>
-  <a routerLink="/registrarse" class="form-link">Desea Registrarse ?</a>
-</mat-card>
+
+<div class="alert alert-warning alert-dismissible fade" id="alert-form" role="alert">
+  <p id="alert-text"></p>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>

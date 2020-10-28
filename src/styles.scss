@@ -1,39 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
-
-// html, body { height: 100%; }
-
-:root {
-  --primary-color: #4834d4;
-  --secondary-color: #686de0;
-  --tertiary-color:#be2edd;
-  --text-color: #dff9fb;
-  --text-color-dark: #000000
-}
+@import "~bootswatch/dist/cosmo/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/cosmo/bootswatch";
 
 * {
-  margin: 0; 
-  padding: 0; 
-  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
-body { 
-  background-image: url('assets/img/cruz-roja.png');
-  background-repeat: no-repeat;
-  background-color: var(--primary-color);
-  font-family: Roboto, "Helvetica Neue", sans-serif; 
-}
-
 
 a {
   text-decoration: none;
-  color:white;
 }
 
-ul {
-  list-style: none;
+body {
+  background-color:#6610f2;
 }
-
-// .global-container {
-//   width: 1150px;
-//   margin: 0 auto;
-// }

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 import { Solicitud } from 'src/app/models/solicitud';
 import { AdminService } from 'src/app/services/admin.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,15 +10,11 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AdminComponent implements OnInit {
   solicitudes = [];
-  correo: string;
-  clave: string;
   enEspera: boolean = false;
 
   constructor(
     private adminSvc: AdminService,
     private authSvc: AuthService,
-    private router: Router,
-    private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -28,11 +22,6 @@ export class AdminComponent implements OnInit {
       this.solicitudes = solicitudes;
       console.log(solicitudes);
     });
-  }
-
-  cerrarSesion(): void {
-    this.authSvc.logout();
-    this.router.navigate(['/iniciarSesion']);
   }
 
   aprobarSolicitud(solicitud: Solicitud): void {
@@ -43,26 +32,30 @@ export class AdminComponent implements OnInit {
     this.adminSvc.rechazarSolicitud(solicitud);
   }
 
-  registrarAdministrador(): void {
+  registrarAdministrador(correo: string, clave: string): void {
     this.enEspera = true;
 
-    this.authSvc.register(this.correo, this.clave).then(cred => {
+    this.authSvc.register(correo, clave).then(cred => {
       this.adminSvc.registrarAdministradorId(cred.user.uid,{
-        correo: this.correo,
-        clave: this.clave,
+        correo: correo,
+        clave: clave,
         perfil: 'administrador',
-        habilitado: true
       });
+
+      this.mostrarAlert('Se ha registrado el usuario exitosamente');
     })
     .catch(() => {
-      this._snackBar.open('No se ha podido registrar el usuario, por favor revise que los campos esten correctos', 'X',{
-        duration: 2000
-      });
+      this.mostrarAlert('No se ha podido registrar el usuario, por favor revise que los campos esten correctos', 2500);
     })
     .finally(() => {
-      this.correo = '';
-      this.clave = '';
       this.enEspera = false;
     }); 
+  }
+
+  mostrarAlert(errMsj: string, duracion: number = 1000): void {
+    const alert = document.querySelector('#alert-form');
+    document.querySelector('#alert-text').innerHTML = errMsj;
+    alert.classList.add('show');
+    setTimeout(() => alert.classList.remove('show'), duracion);
   }
 }

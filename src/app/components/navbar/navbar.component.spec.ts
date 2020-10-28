@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NoAutorizadoModalComponent } from './no-autorizado-modal.component';
+import { NavbarComponent } from './navbar.component';
 
-describe('NoAutorizadoModalComponent', () => {
-  let component: NoAutorizadoModalComponent;
-  let fixture: ComponentFixture<NoAutorizadoModalComponent>;
+describe('NavbarComponent', () => {
+  let component: NavbarComponent;
+  let fixture: ComponentFixture<NavbarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NoAutorizadoModalComponent ]
+      declarations: [ NavbarComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NoAutorizadoModalComponent);
+    fixture = TestBed.createComponent(NavbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
