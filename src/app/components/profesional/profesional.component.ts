@@ -48,4 +48,5 @@ export class ProfesionalComponent implements OnInit {
     const {correo, docId} = this.profesional;
     this.profesionalSvc.enviarSolicitudAprobacion(docId, correo);
   }
+
 } 

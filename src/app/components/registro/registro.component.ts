@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../services/auth.service';
 import { firestore } from 'firebase/app';
 import { UsuariosService } from '../../services/usuarios.service';
@@ -81,7 +80,8 @@ export class RegistroComponent implements OnInit {
           especialidades: firestore.FieldValue.arrayUnion(...this.especialidades),
           docIdUsuario: cred.user.uid,
           correo: this.correo,
-          habilitado: false
+          habilitado: false,
+          puedeAtender: false,
         });
 
         this.enEspera = false;

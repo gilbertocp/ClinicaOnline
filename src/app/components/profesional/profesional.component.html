@@ -1,9 +1,35 @@
 <app-navbar></app-navbar>
 
 <div class="container">
-  
-</div>
+  <div *ngIf="profesional && !profesional.puedeAtender">
+    <div class="alert alert-info alert-dismissible text-center fade show" role="alert">
+      <p>
+        Debe configurar su horario de atención para poder atender en la clínica
+      </p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
 
+  <ul class="nav nav-pills nav-fill bg-secondary text-white mt-5">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#turnos">Turnos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#horario">Horario Atención</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane fade active show" id="turnos">
+      <app-turnos-profesional-detalles *ngIf="profesional" [profesional]="profesional"></app-turnos-profesional-detalles>
+    </div>
+    <div class="tab-pane fade active" id="horario">
+      <app-horario-configuracion *ngIf="profesional" [profesional]="profesional"></app-horario-configuracion>
+    </div>
+  </div>
+</div>
 
 <!-- Button trigger modal -->
 <button type="button" id="modal-launcher" hidden="true" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">

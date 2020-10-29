@@ -4,7 +4,8 @@ export interface Profesional {
   habilitado: boolean,
   correo?: string,
   docId?: string,
-  diasAtencion?: string[],
+  puedeAtender: boolean
+  diasAtencion?: any,
   horarioInicio?: string,
   horarioSalida?: string,
 }

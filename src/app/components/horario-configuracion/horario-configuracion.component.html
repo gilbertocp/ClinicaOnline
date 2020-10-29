@@ -1,0 +1,51 @@
+<div class="card">
+  <h2 class="text-center text-white">Horario</h2>
+  <div class="card-body">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="horaInicio">Hora Inicio</label>
+          <input type="time" class="form-control" minlength="08:00" maxlength="12:00" id="horaInicio" name="horarioInicio">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="horaSalida">Hora Salida</label>
+          <input type="time" class="form-control" id="horaSalida" name="horarioSalida">
+        </div>
+      </div>
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="diasAtencion" id="lunes" value="lunes">
+        <label class="form-check-label" for="lunes">Lunes</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="diasAtencion" id="martes" value="martes">
+        <label class="form-check-label" for="martes">Martes</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="diasAtencion" id="miercoles" value="miercoles">
+        <label class="form-check-label" for="miercoles">Miercoles</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="diasAtencion" id="jueves" value="jueves">
+        <label class="form-check-label" for="jueves">Jueves</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="diasAtencion" id="viernes" value="viernes">
+        <label class="form-check-label" for="viernes">Viernes</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="diasAtencion" id="sabado" value="sabado">
+        <label class="form-check-label" for="sabado">Sábado</label>
+      </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-primary" type="button" (click)="guardarHorario(profesional)">Guardar</button>
+  </div>
+</div>
+
+
+<div class="alert alert-warning alert-dismissible fade" id="alert-form" role="alert">
+  <p id="alert-text"></p>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>

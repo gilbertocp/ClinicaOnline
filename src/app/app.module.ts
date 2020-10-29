@@ -19,6 +19,11 @@ import { ProfesionalComponent } from './components/profesional/profesional.compo
 import { InicioComponent } from './components/inicio/inicio.component';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { HorarioConfiguracionComponent } from './components/horario-configuracion/horario-configuracion.component';
+import { PedirTurnoComponent } from './components/pedir-turno/pedir-turno.component';
+import { TurnosPacienteDetallesComponent } from './components/turnos-paciente-detalles/turnos-paciente-detalles.component';
+import { TurnosPasadosDetalleComponent } from './components/turnos-pasados-detalle/turnos-pasados-detalle.component';
+import { TurnosProfesionalDetallesComponent } from './components/turnos-profesional-detalles/turnos-profesional-detalles.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +35,12 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     PacienteComponent,
     ProfesionalComponent,
     InicioComponent,
-    NavbarComponent
+    NavbarComponent,
+    HorarioConfiguracionComponent,
+    PedirTurnoComponent,
+    TurnosPacienteDetallesComponent,
+    TurnosPasadosDetalleComponent,
+    TurnosProfesionalDetallesComponent
   ],
   imports: [
     BrowserModule,

@@ -15,7 +15,7 @@ export class ProfesionalService {
   }
 
   obtenerProfesionales(): Observable<Profesional[]> {
-    return this.db.collection<Profesional>('profesionales').valueChanges({idField: 'docId'});
+    return this.db.collection<Profesional>('profesionales', ref => ref.where('puedeAtender', '==', true)).valueChanges({idField: 'docId'});
   }
 
   enviarSolicitudAprobacion(docId: string, email: string): void {
@@ -25,4 +25,11 @@ export class ProfesionalService {
       fecha: new Date()
     });
   }
+
+  guardarHorario(docId: string,dias: string[], horarioInicio: string, horarioSalida: string): void {
+    this.db.collection<Profesional>('profesionales').doc(docId).set({
+      horarioInicio, horarioSalida, diasAtencion: dias, puedeAtender: true
+    }, {merge: true});
+  }
+
 }
