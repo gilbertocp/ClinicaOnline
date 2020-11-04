@@ -30,29 +30,3 @@
     </div>
   </div>
 </div>
-
-<!-- Button trigger modal -->
-<button type="button" id="modal-launcher" hidden="true" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
-  Launch static backdrop modal
-</button>
-<button type="button" id="closeBtn" data-toggle="#staticBackdrop" data-dismiss="modal" hidden="true">para cerrar el modal</button>
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Acceso Denegado</h5>
-      </div>
-      <div class="modal-body">
-        Usted tiene que estar autorizado por un administrador para navegar en el sistema,
-        Envie una solicitud de aprobación para continuar
-      </div>
-      <div class="modal-footer" *ngIf="solicitudAprobacion$ | async as solicitud">
-        <button type="button" class="btn btn-primary btn-block" [disabled]="solicitud.length === 1" (click)="enviarSolicitud()">
-          {{solicitud.length === 1 ? 'Solicitud Enviada':'Enviar solicitud de aprobación'}}
-        </button>
-      </div>
-    </div>
-  </div>
-</div>

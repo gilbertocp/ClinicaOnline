@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { environment } from '../../../environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -51,16 +51,21 @@ export class LoginComponent implements OnInit {
     })
     .catch(() => {
       this.enEspera = false;
-      this.mostrarAlert('No se ha podio iniciar sesión, por favor verifique que los campos sean correctos', 2500);
+      Swal.fire({
+        toast: true,
+        icon: 'error',
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        title: 'No se ha podido iniciar sesión, verifique que los campos sean correctos',
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      });
     });
   
-  }
-
-  mostrarAlert(errMsj: string, duracion: number = 1000): void {
-    const alert = document.querySelector('#alert-form');
-    document.querySelector('#alert-text').innerHTML = errMsj;
-    alert.classList.add('show');
-    setTimeout(() => alert.classList.remove('show'), duracion);
   }
 
 }

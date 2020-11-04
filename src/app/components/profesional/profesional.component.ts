@@ -1,10 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Profesional } from 'src/app/models/profesional';
-import { Solicitud } from 'src/app/models/solicitud';
 import { AuthService } from 'src/app/services/auth.service';
-import { ProfesionalService } from 'src/app/services/profesional.service';
-import { SolicitudesService } from 'src/app/services/solicitudes.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profesional',
@@ -13,46 +11,43 @@ import { SolicitudesService } from 'src/app/services/solicitudes.service';
 })
 export class ProfesionalComponent implements OnInit, OnDestroy {
 
-  private subscriptions: Subscription[] = [];
+  private subscription: Subscription;
+  private alertaAccesoDenegado: any;
   profesional: Profesional;
-  modalBtn: HTMLButtonElement;
-  solicitudAprobacion$: Observable<Solicitud[]>;
 
-  constructor(
-    private authSvc: AuthService,
-    private profesionalSvc: ProfesionalService,
-    private solicitudesSvc: SolicitudesService
-  ) { }
+  constructor(private authSvc: AuthService) { }
 
   ngOnInit(): void {
-    this.subscriptions.push(
-      this.authSvc.getCurrentUserData('profesional').subscribe(profesional => {
-        this.profesional = profesional[0];
-        console.log(this.profesional);
+    this.subscription = this.authSvc.getCurrentUserData('profesional').subscribe(profesionales => {
+      this.profesional = profesionales[0];
+      console.log(this.profesional);
 
-        if(!this.profesional.habilitado) {
-          if(!this.modalBtn) {
-            this.modalBtn = document.querySelector('#modal-launcher') as HTMLButtonElement;
-            this.modalBtn.click();
-          }
-        } else {
-          if(this.modalBtn) {
-            this.modalBtn = null;
-            (document.querySelector('#closeBtn') as HTMLButtonElement).click()
-          }
+      if(!this.profesional.habilitado) {
+        if(!this.alertaAccesoDenegado) {
+          Swal.fire({
+            title: 'Acceso Denegado',
+            text: `Este usuario debe estar aprobado para poder ingresar al sistema, contactese con un usuario administrador para continuar`,
+            width: '500px',
+            position: 'top',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEnterKey: false,
+            allowEscapeKey: false,
+            backdrop: true,
+          });
         }
+      } 
 
-        this.solicitudAprobacion$ = this.solicitudesSvc.getSolicitud(this.profesional.docId);
-      })
-    );
+      if(this.profesional.habilitado) {
+        if(this.alertaAccesoDenegado) {
+          this.alertaAccesoDenegado.close();
+          this.alertaAccesoDenegado = null;
+        }
+      }
+    });
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(s => s.unsubscribe());
-  }
-
-  enviarSolicitud(): void {
-    const {correo, docId} = this.profesional;
-    this.profesionalSvc.enviarSolicitudAprobacion(docId, correo);
+    this.subscription.unsubscribe();
   }
 } 

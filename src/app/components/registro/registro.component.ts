@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ProfesionalService } from 'src/app/services/profesional.service';
 import { PacienteService } from 'src/app/services/paciente.service';
+import Swal from 'sweetalert2';
+import { SolicitudesService } from 'src/app/services/solicitudes.service';
 
 @Component({
   selector: 'app-registro',
@@ -36,30 +38,39 @@ export class RegistroComponent implements OnInit {
     private usuariosSvc: UsuariosService,
     private profesionalesSvc: ProfesionalService,
     private pacientesSvc: PacienteService,
-    private router: Router
+    private router: Router,
+    private solicitudesSvc: SolicitudesService,
   ) { } 
 
   ngOnInit(): void {
   }
 
-  registrar() {
+  registrar(): void {
+    const alerta = Swal.mixin({
+      timer: 2000,
+      icon: 'error',
+      timerProgressBar: true,
+      backdrop: true
+    });
+  
+
     if(!this.perfil) {
-      this.mostrarAlert('Tiene que especificar el tipo de perfil a registrar', 2000);
+      alerta.fire({titleText: 'Tiene que especificar el tipo de perfil a registrar'});
       return;
     }
 
     if(!this.captchaVerificado) {
-      this.mostrarAlert('Verifique el captcha primero', 2000);
+      alerta.fire({titleText: 'Verifique el captcha primero'});
       return;
     }
 
     if(this.perfil === 'paciente' && this.imagenes.length !== 2) {
-      this.mostrarAlert('Tiene que subir dos fotos para ingresar', 2000);
+      alerta.fire({titleText: 'Tiene que subir dos fotos para ingresar'});
       return;
     }
 
     if(this.perfil === 'profesional' && this.especialidades.length === 0 ) {
-      this.mostrarAlert('Tiene que agregar al menos una especialidad', 2000);
+      alerta.fire({titleText: 'Tiene que agregar al menos una especialidad'});
       return;
     }
 
@@ -83,6 +94,7 @@ export class RegistroComponent implements OnInit {
           nombre: this.nombre,
           apellido: this.apellido
         });
+        this.profesionalesSvc.enviarSolicitudAprobacion(cred.user.uid, cred.user.email);
 
         this.enEspera = false;
         this.router.navigate(['perfil']);
@@ -118,18 +130,15 @@ export class RegistroComponent implements OnInit {
             apellido: this.apellido
           });
 
-          this.enEspera = false;
           this.authSvc.sendEmailVerification(cred.user);
+          this.enEspera = false;
           this.router.navigate(['perfil']);
 
-        }).catch(err => {
-          console.log(err.message);
         });
       }
     }).catch(() =>  {
       this.enEspera = false;
-
-      this.mostrarAlert('No se ha podido registrar el usuario, por favor verifique que los campos ingresados sean correctos', 3000);
+      alerta.fire({titleText: 'No se ha podido registrar el usuario, por favor verifique que los campos ingresados sean correctos'});
     });
   }
 
@@ -151,12 +160,4 @@ export class RegistroComponent implements OnInit {
   eliminarEspecialidad(especialidad: string): void {
     this.especialidades.splice(this.especialidades.indexOf(especialidad), 1);    
   }
-
-  mostrarAlert(errMsj: string, duracion: number = 1000): void {
-    const alert = document.querySelector('#alert-form');
-    document.querySelector('#alert-text').innerHTML = errMsj;
-    alert.classList.add('show');
-    setTimeout(() => alert.classList.remove('show'), duracion);
-  }
-
 }

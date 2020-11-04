@@ -1,11 +1,9 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { User } from 'firebase';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Paciente } from 'src/app/models/paciente';
 import { Profesional } from 'src/app/models/profesional';
-import { Turno } from 'src/app/models/turno';
 import { AuthService } from 'src/app/services/auth.service';
-import { TurnosService } from 'src/app/services/turnos.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-paciente',
@@ -15,16 +13,11 @@ import { TurnosService } from 'src/app/services/turnos.service';
 export class PacienteComponent implements OnInit, OnDestroy {
 
   paciente: Paciente;
-  authUser: firebase.User;
   profesionales: Profesional[];
-  mostrarTurnoAlert: boolean = false;
-  btnConfirmarElement: HTMLButtonElement;
+  alertaConfirmarCorreo: any;
   private subscriptions: Subscription[] = [];
 
-  constructor(
-    private authSvc: AuthService,
-    private turnosSvc: TurnosService  
-  ) { }
+  constructor(private authSvc: AuthService) {  }
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -35,15 +28,24 @@ export class PacienteComponent implements OnInit, OnDestroy {
       }),
 
       this.authSvc.getCurrentUser().subscribe(user => {
-        this.authUser = user;
-  
         if(!user.emailVerified)  {
-          this.btnConfirmarElement = document.querySelector('#btnConfirmarCorreo') as HTMLButtonElement;
-          this.btnConfirmarElement.click();
-        } else {
-          if(this.btnConfirmarElement) {
-            this.btnConfirmarElement.click();
-            this.btnConfirmarElement = null;
+          this.alertaConfirmarCorreo = Swal.fire({
+            title: 'Acceso Denegado',
+            text: `Se ha enviado un email de confirmación a ${user.email}, Por favor confirme su correo electrónico para ingresar al sistema`,
+            width: '500px',
+            position: 'top',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEnterKey: false,
+            allowEscapeKey: false,
+            backdrop: true,
+          });
+        } 
+        
+        if(user.emailVerified) {
+          if(this.alertaConfirmarCorreo) {
+            this.alertaConfirmarCorreo.close();
+            this.alertaConfirmarCorreo = null;
           }
         }
       }),

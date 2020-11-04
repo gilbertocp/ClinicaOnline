@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Profesional } from 'src/app/models/profesional';
 import { Turno } from 'src/app/models/turno';
 import { TurnosService } from 'src/app/services/turnos.service';
-import { TurnoEstado } from 'src/app/models/turno-estado.enum';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-turnos-profesional-detalles',
@@ -12,8 +12,6 @@ import { TurnoEstado } from 'src/app/models/turno-estado.enum';
 export class TurnosProfesionalDetallesComponent implements OnInit {
 
   @Input() profesional: Profesional;
-  reseniaProfesional: string;
-  docIdTurnoSeleccionado: string;
   turnos: Turno[];
 
   constructor(
@@ -26,16 +24,22 @@ export class TurnosProfesionalDetallesComponent implements OnInit {
     });
   }
 
-  turnoSeleccionado(docId: string): void {
-    this.docIdTurnoSeleccionado = docId; 
-  }
-
   aceptarTurno(docId: string): void {
     this.turnosSvc.confirmarTurno(docId);
   }
 
-  cancelarTurno(): void {
-    (document.querySelector('#closeBtn') as HTMLButtonElement).click();
-    this.turnosSvc.cancelarTurnoProfesional(this.docIdTurnoSeleccionado, this.reseniaProfesional);
+  cancelarTurno(docId: string): void {
+    Swal.fire({
+      title: 'Motivo del rechazo?',
+      input: 'text',
+      inputValue: '',
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Este campo es obligatorio!'
+        }
+        this.turnosSvc.cancelarTurnoProfesional(docId, value);
+      }
+    });
   }
 }

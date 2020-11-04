@@ -1,10 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="container-fluid">
-  <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngIf="mostrarTurnoAlert">
-    <p class="text-center">Se ha reservado el turno exitosamente!</p>
-  </div>
-
+<div class="container-fluid" >
   <ul class="nav nav-pills nav-fill bg-secondary text-white mt-3">
     <li class="nav-item">
       <a class="nav-link active" data-toggle="tab" href="#turnos">Pedir Turno</a>
@@ -28,24 +24,4 @@
       <app-turnos-pasados-detalle *ngIf="paciente" [paciente]="paciente"></app-turnos-pasados-detalle>
     </div>
   </div> 
-</div>
-
-
-<!-- Button trigger modal -->
-<button type="button" id="btnConfirmarCorreo" class="btn btn-primary" hidden="true" data-toggle="modal" data-target="#confirmarCorreo">
-  Launch static backdrop modal
-</button>
-<!-- Modal -->
-<div class="modal fade" id="confirmarCorreo" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Confirmar correo electrónico</h5>
-      </div>
-      <div class="modal-body" *ngIf="authUser">
-        Se ha enviado un email de confirmación a <b>{{authUser.email}}</b> <br>
-        Por favor verifique el buzón de entrada y haga click en el link para verificar su correo electrónico
-      </div>
-    </div>
-  </div>
 </div>
