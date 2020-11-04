@@ -2,7 +2,9 @@
   <thead>
     <th scope="col">Hora</th>
     <th scope="col">Fecha</th>
-    <th scope="col">Aceptar</th>
+    <th scope="col">Estado</th >
+    <th scope="col">Testimonio Paciente</th>
+    <th scope="col">Confirmar</th>
     <th scope="col">Cancelar</th>
   </thead>
   <tbody>
@@ -10,10 +12,16 @@
       <td>{{turno.hora}}</td>
       <td>{{turno.fecha | date:'dd/MM/yyyy'}}</td>
       <td>
-        <button class="btn btn-block btn-primary">Aceptar Turno</button>
+        {{turno.estado | estadoTurno}}
       </td>
       <td>
-        <button class="btn btn-block btn-danger">Cancelar Turno</button>
+        <button class="btn btn-info btn-block" [disabled]="!turno.reseniaPaciente">Ver reseña paciente</button>
+      </td>
+      <td>
+        <button class="btn btn-block btn-primary" [disabled]="turno.reseniaProfesional || turno.estado === 3" (click)="aceptarTurno(turno.docId)">Aceptar Turno</button>
+      </td>
+      <td>
+        <button class="btn btn-block btn-danger"  [disabled]="turno.reseniaProfesional || turno.estado === 3" data-toggle="modal" data-target="#staticBackdrop" (click)="turnoSeleccionado(turno.docId)">Cancelar Turno</button>
       </td>
     </tr>
   </tbody>
@@ -22,3 +30,26 @@
   <div class="alert alert-primary fade show" *ngIf="turnos && turnos.length === 0">
     <p class="text-center">No hay turnos que mostrar</p>
   </div>
+
+
+  <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Motivo del rechazo?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control" name="reseniaProfesional" id="reseniaProfesional" placeholder="Escriba un mensaje" [(ngModel)]="reseniaProfesional">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="cancelarTurno()">Aceptar</button>
+        <button type="button" id="closeBtn" data-dismiss="modal" hidden="true">para cerrar el modal</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<label for="hora">Elegir hora</label>
+<div class="list-group d-flex justify-content-evenly" id="horarios">
+  <div
+    class="list-group-item d-flex justify-content-between"
+    *ngFor="let hora of horas"
+  >
+    <span
+      >{{ hora.get("hours") }}:{{
+        hora.get("minutes") === 0 ? "00" : hora.get("minutes")
+      }}
+      hrs</span
+    >
+    <button
+      class="btn btn-primary"
+      (click)="seleccionarHora($event,hora)"
+    >
+      Seleccionar
+    </button>
+  </div>
+  <div class="alert alert-info" *ngIf="!horas">
+    Seleccione una fecha para ver las horas disponibles
+  </div>
+</div>

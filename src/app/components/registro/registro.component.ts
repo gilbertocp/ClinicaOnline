@@ -15,6 +15,8 @@ import { PacienteService } from 'src/app/services/paciente.service';
 })
 export class RegistroComponent implements OnInit {
 
+  nombre: string;
+  apellido: string;
   perfil: string;
   correo: string;
   clave: string;
@@ -38,10 +40,6 @@ export class RegistroComponent implements OnInit {
   ) { } 
 
   ngOnInit(): void {
-  }
-
-  cambiado() {
-    console.log(this.perfil);
   }
 
   registrar() {
@@ -82,6 +80,8 @@ export class RegistroComponent implements OnInit {
           correo: this.correo,
           habilitado: false,
           puedeAtender: false,
+          nombre: this.nombre,
+          apellido: this.apellido
         });
 
         this.enEspera = false;
@@ -114,6 +114,8 @@ export class RegistroComponent implements OnInit {
               await tasks[0].ref.getDownloadURL(),
               await tasks[1].ref.getDownloadURL()
             ),
+            nombre: this.nombre,
+            apellido: this.apellido
           });
 
           this.enEspera = false;

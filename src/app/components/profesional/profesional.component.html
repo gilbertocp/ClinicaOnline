@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="container">
+<div class="container-fluid">
   <div *ngIf="profesional && !profesional.puedeAtender">
     <div class="alert alert-info alert-dismissible text-center fade show" role="alert">
       <p>
@@ -12,7 +12,7 @@
     </div>
   </div>
 
-  <ul class="nav nav-pills nav-fill bg-secondary text-white mt-5">
+  <ul class="nav nav-pills nav-fill bg-secondary text-white mt-3">
     <li class="nav-item">
       <a class="nav-link active" data-toggle="tab" href="#turnos">Turnos</a>
     </li>
@@ -35,6 +35,7 @@
 <button type="button" id="modal-launcher" hidden="true" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
   Launch static backdrop modal
 </button>
+<button type="button" id="closeBtn" data-toggle="#staticBackdrop" data-dismiss="modal" hidden="true">para cerrar el modal</button>
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

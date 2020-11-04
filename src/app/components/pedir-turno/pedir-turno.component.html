@@ -1,74 +1,40 @@
-<div class="input-group mt-3">
-  <div class="input-group-prepend">
-    <select class="custom-select" name="filtro" [(ngModel)]="filtro" (change)="cambiarFiltro()">
-      <option value="apellido">Apellido</option>
-      <option value="dia">Dias</option>
-      <option value="especialidad">Especialidad</option>
-    </select>
-  </div>
-  <input *ngIf="filtro === 'apellido' || filtro === 'especialidad'" #filtroTxt type="text" name="valor" [(ngModel)]="valor" class="form-control rounded-right">
-  <select *ngIf="filtro === 'dia'" name="valor" [(ngModel)]="valor" class="custom-select">
-    <option value="lunes" selected>Lunes</option>
-    <option value="martes">Martes</option>
-    <option value="miercoles">Miércoles</option>
-    <option value="jueves">Jueves</option>
-    <option value="viernes">Viernes</option>
-    <option value="sabado">Sábado</option>
-  </select>
-</div>
 <div class="table-responsive">
-  <table class="table table-dark">
-    <thead>
+  <table class="table table-light table-striped table-hover text-center">
+    <thead class="thead-dark">
       <tr>
-        <th scope="col">Correo</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
         <th scope="col">Especialidades</th>
+        <th scope="col">Horario</th>
         <th scope="col">Dias</th>
         <th scope="col">#</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let profesional of profesionales">
-        <td>{{profesional.correo}}</td>
-        <td>{{profesional.especialidades}}</td>
-        <td>{{profesional.diasAtencion}}</td>
+        <td>{{ profesional.nombre }}</td>
+        <td>{{ profesional.apellido }}</td>
+        <td>{{ profesional.especialidades }}</td>
         <td>
-          <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#staticBackdrop" (click)="pedirTurno(profesional)">Pedir Turno</button>
+          De {{ profesional.horarioInicio }} hasta
+          {{ profesional.horarioSalida }}
+        </td>
+        <td>
+          <span *ngFor="let dia of profesional.diasAtencion">
+            {{ dia | titlecase }}
+          </span>
+        </td>
+        <td>
+          <button
+            class="btn btn-primary btn-block"
+            (click)="pedirTurno(profesional)"
+          >
+            Pedir Turno
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Pedir Turno</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="fecha">Elegir fecha</label>
-          <input type="date" name="fecha" id="fecha" class="form-control" [(ngModel)]="fechaTurno">
-        </div>
-        <div class="form-group">
-          <label for="hora">Elegir hora</label>
-          <input type="time" name="hora" id="hora" class="form-control" [(ngModel)]="horaTurno">
-        </div>
-        <!-- <select class="custom-select" *ngIf="profesionalSeleccionado">
-          <option *ngFor="let dia of profesionalSeleccionado.diasAtencion" value="dia">{{dia | uppercase}}</option>
-        </select> -->
-
-        <p class="text-danger">{{errMsjModal}}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" (click)="turnoConfirmado()">Aceptar</button>
-        <button type="button" id="closeBtn" data-dismiss="modal" hidden="true">para cerrar el modal</button>
-      </div>
-    </div>
-  </div>
-</div>
+<app-pedir-turno-modal #pedirTurnoModal (fechaHoraProfesionalSeleccionados)="sacarTurno($event)"></app-pedir-turno-modal>

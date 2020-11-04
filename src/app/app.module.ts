@@ -24,6 +24,13 @@ import { PedirTurnoComponent } from './components/pedir-turno/pedir-turno.compon
 import { TurnosPacienteDetallesComponent } from './components/turnos-paciente-detalles/turnos-paciente-detalles.component';
 import { TurnosPasadosDetalleComponent } from './components/turnos-pasados-detalle/turnos-pasados-detalle.component';
 import { TurnosProfesionalDetallesComponent } from './components/turnos-profesional-detalles/turnos-profesional-detalles.component';
+import { EstadoTurnoPipe } from './pipes/estado-turno.pipe';
+import {DpDatePickerModule} from 'ng2-date-picker';
+import { HorasComponent } from './components/horas/horas.component';
+import { FechasComponent } from './components/fechas/fechas.component';
+import { FiltroProfesionalesComponent } from './components/filtro-profesionales/filtro-profesionales.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { PedirTurnoModalComponent } from './components/pedir-turno-modal/pedir-turno-modal.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +47,12 @@ import { TurnosProfesionalDetallesComponent } from './components/turnos-profesio
     PedirTurnoComponent,
     TurnosPacienteDetallesComponent,
     TurnosPasadosDetalleComponent,
-    TurnosProfesionalDetallesComponent
+    TurnosProfesionalDetallesComponent,
+    EstadoTurnoPipe,
+    HorasComponent,
+    FechasComponent,
+    FiltroProfesionalesComponent,
+    PedirTurnoModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +63,9 @@ import { TurnosProfesionalDetallesComponent } from './components/turnos-profesio
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    RecaptchaModule
+    RecaptchaModule,
+    DpDatePickerModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

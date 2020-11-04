@@ -1,0 +1,18 @@
+<div class="input-group">
+  <div class="input-group-prepend">
+    <select class="custom-select" name="filtro" [(ngModel)]="filtro" (change)="cambiarFiltro()">
+      <option value="apellido">Apellido</option>
+      <option value="dia">Dias</option>
+      <option value="especialidad">Especialidad</option>
+    </select>
+  </div>
+  <input *ngIf="filtro === 'apellido' || filtro === 'especialidad'" #filtroTxt type="text" name="valor" [(ngModel)]="valor" class="form-control rounded-right">
+  <select *ngIf="filtro === 'dia'" name="valor" [(ngModel)]="filtro" class="custom-select">
+    <option value="lunes" selected>Lunes</option>
+    <option value="martes">Martes</option>
+    <option value="miercoles">Miércoles</option>
+    <option value="jueves">Jueves</option>
+    <option value="viernes">Viernes</option>
+    <option value="sabado">Sábado</option>
+  </select>
+</div>

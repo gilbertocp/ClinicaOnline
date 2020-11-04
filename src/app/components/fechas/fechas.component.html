@@ -1,0 +1,11 @@
+<div class="form-group">
+  <label for="fecha">Elegir Fecha</label>
+  <input
+    name="fecha"
+    (onChange)="seleccionado($event)"
+    placeholder="Haga click para seleccionar una fecha."
+    [dpDayPicker]="configuracionCalendario"
+    class="form-control"
+    theme="dp-material"
+  />
+</div>

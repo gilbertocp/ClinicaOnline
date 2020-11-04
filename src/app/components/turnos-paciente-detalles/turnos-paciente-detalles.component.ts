@@ -21,4 +21,7 @@ export class TurnosPacienteDetallesComponent implements OnInit {
     });
   }
 
+  cancelarTurno(docId: string): void {
+    this.turnosSvc.cancelarTurnoPaciente(docId);
+  }
 }

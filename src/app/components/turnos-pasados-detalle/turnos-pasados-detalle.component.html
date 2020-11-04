@@ -1,16 +1,84 @@
-<table class="table table-dark mt-3" *ngIf="turnosPasados else nada">
+<table class="table table-dark" *ngIf="turnosPasados">
   <thead>
     <th scope="col">Hora</th>
     <th scope="col">Fecha</th>
-    <th scope="col">Cancelar</th>
+    <th scope="col">Reseña Profesional</th>
+    <th scope="col">Testimonio</th>
   </thead>
   <tbody>
-
+    <tr *ngFor="let turno of turnosPasados">
+      <td>{{ turno.hora }}</td>
+      <td>{{ turno.fecha }}</td>
+      <td>
+        <button
+          class="btn btn-warning btn-block"
+          [disabled]="!turno.reseniaProfesional"
+          data-toggle="modal"
+          data-target="#exampleModal"
+          (click)="setearResenia(turno.reseniaProfesional)"
+        >
+          {{
+            !turno.reseniaProfesional
+              ? (turno.estado | estadoTurno)
+              : "Ver Reseña"
+          }}
+        </button>
+      </td>
+      <td>
+        <button class="btn btn-info btn-block" [disabled]="turno.estado !== 4">
+          {{
+            turno.estado !== 4
+              ? (turno.estado | estadoTurno)
+              : "Dejar Testimonio"
+          }}
+        </button>
+      </td>
+    </tr>
   </tbody>
 </table>
 
-<ng-template #nada>
-  <div class="alert alert-primary fade show">
-    <p class="text-center">No hay turnos que mostrar</p>
+<div
+  class="alert alert-primary fade show"
+  *ngIf="turnosPasados && turnosPasados.length === 0"
+>
+  <p class="text-center">No hay turnos que mostrar</p>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Reseña / Testimonio</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input
+          type="text"
+          class="form-control text-center"
+          disabled="true"
+          name="resenia"
+          id="resenia"
+          [(ngModel)]="resenia"
+        />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
   </div>
-</ng-template>
+</div>

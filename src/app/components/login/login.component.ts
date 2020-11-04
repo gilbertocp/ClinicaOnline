@@ -14,9 +14,6 @@ export class LoginComponent implements OnInit {
   clave: string;
   ocultar = true;
   enEspera = false;
-  siteKey = environment.captchaKey;
-  // cambiado a true para debuggear
-  captchaVerificado: boolean = true;
 
   constructor(
     private authSvc: AuthService,
@@ -39,19 +36,13 @@ export class LoginComponent implements OnInit {
       break;
 
       case 'paciente':
-        this.correo = 'enynovil-4989@yopmail.com';
-        this.clave = '222222';
+        this.correo = 'mywudduhe-8193@yopmail.com';
+        this.clave = '111111';
       break;
     }
   }
 
   iniciarSesion(): void {
-
-    if(!this.captchaVerificado) {
-      this.mostrarAlert('Tiene que verificar el captcha primero', 2500);
-      return;
-    }
-
     this.enEspera = true;
 
     this.authSvc.login(this.correo, this.clave).then(() => {

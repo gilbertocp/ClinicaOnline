@@ -1,8 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ProfesionalService } from 'src/app/services/profesional.service';
 import { Profesional } from '../../models/profesional';
-import * as moment from 'moment';
-import { TurnosService } from 'src/app/services/turnos.service';
+import { PedirTurnoModalComponent } from '../pedir-turno-modal/pedir-turno-modal.component';
+import { TurnosService } from '../../services/turnos.service';
+import { TurnoEstado } from '../../models/turno-estado.enum';
+import { Paciente } from '../../models/paciente';
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 
 @Component({
   selector: 'app-pedir-turno',
@@ -11,68 +14,47 @@ import { TurnosService } from 'src/app/services/turnos.service';
 })
 export class PedirTurnoComponent implements OnInit {
 
-  @Output() turnoDetallesEvent = new EventEmitter();
-  profesionalSeleccionado: Profesional;
+  @ViewChild('pedirTurnoModal') pedirTurnoModal: PedirTurnoModalComponent;
+  @Input() paciente: Paciente;
   profesionales: Profesional[];
-  filtro: string = 'apellido';
-  fechaTurno: string;
-  horaTurno: string;
-  valor: string = '';
-  fechaActual: string = (new Date().toLocaleString().split(' ')[0]).split('/').join('-');
-  errMsjModal: string;
 
-  constructor(private profesionalSvc: ProfesionalService) {  }
+  constructor(
+    private profesionalSvc: ProfesionalService,
+    private turnosSvc: TurnosService  
+  ) {  }
 
   ngOnInit(): void {
-    console.log(this.fechaActual);
-    
     this.profesionalSvc.obtenerProfesionales().subscribe(profesionales => {
       this.profesionales = profesionales;
     });
   }
 
-  cambiarFiltro(): void {
-    if(this.filtro === 'dia')
-      this.valor = 'lunes';
-    else
-      this.valor = '';
+  pedirTurno(profesional): void {   
+    this.pedirTurnoModal.abrir(profesional);
   }
 
-  pedirTurno(profesional: Profesional): void {
-    this.profesionalSeleccionado = profesional;
-  }  
-
-  turnoConfirmado(): void {
-    const dias = {
-      1: 'lunes',
-      2: 'martes',
-      3: 'miercoles',
-      4: 'jueves',
-      5: 'viernes',
-      6: 'sabado',
-      0: 'domingo'
-    }; 
-    console.log(this.fechaTurno, this.horaTurno);
-
-    if(!this.fechaTurno || !this.horaTurno) {
-      this.errMsjModal = 'No debe haber campos vacios';
-      return;
+  sacarTurno(obj: any): void {
+    const swalOptions: SweetAlertOptions = {
+      title: 'Solicitud de turnos',
+      confirmButtonText: 'Ok'
     }
 
-    const diaDeLaSemana = dias[moment(this.fechaTurno).weekday()];
-    console.log('Dia de la semana => ', diaDeLaSemana);
-    
-    if(!this.profesionalSeleccionado.diasAtencion.includes(diaDeLaSemana)) {
-      this.errMsjModal= 'El profesional no atiende los dias ' + diaDeLaSemana;
-      return;
-    }
-    this.errMsjModal = '';
-    this.turnoDetallesEvent.emit({
-      docIdProfesional: this.profesionalSeleccionado.docId,
-      fecha: this.fechaTurno,
-      hora: this.horaTurno,
+    this.turnosSvc.agregarTurno({
+      ...obj,
+      estado: TurnoEstado.enEspera,
+      docIdPaciente: this.paciente.docId
+    }).then(() => {
+      swalOptions.icon = 'success';
+      swalOptions.text = 'El turno ha sido solicitado!';
+    })
+    .catch(() => {
+      swalOptions.icon = 'error';
+      swalOptions.text = 'Ha ocurrido un error al solicitar el turno, intentelo de nuevo';
+    })
+    .finally(() => {
+      Swal.fire(swalOptions);
     });
-    (document.querySelector('#closeBtn') as HTMLButtonElement).click();
 
   }
+
 }
