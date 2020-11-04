@@ -32,7 +32,7 @@ export class AdminService {
     this.db.collection('solicitudes_profesionales').doc(solicitud.docId).delete();
   }
 
-  registrarAdministradorId(docId: string,admin: Usuario): void {
+  registrarAdministradorId(docId: string, admin: Usuario): void {
     this.db.collection('usuarios').doc(docId).set(admin);
   }
 }

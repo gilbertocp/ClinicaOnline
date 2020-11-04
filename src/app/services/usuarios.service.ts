@@ -9,7 +9,7 @@ export class UsuariosService {
 
   constructor(private db: AngularFirestore) { }
 
-  addUsuarioWithId(docId: string,data: Usuario) {
+  addUsuarioWithId(docId: string, data: Usuario): void {
     this.db.collection('usuarios').doc(docId).set(data);
   }
 }

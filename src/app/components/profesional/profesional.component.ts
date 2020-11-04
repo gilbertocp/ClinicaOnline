@@ -22,8 +22,8 @@ export class ProfesionalComponent implements OnInit, OnDestroy {
       this.profesional = profesionales[0];
       console.log(this.profesional);
 
-      if(!this.profesional.habilitado) {
-        if(!this.alertaAccesoDenegado) {
+      if (!this.profesional.habilitado) {
+        if (!this.alertaAccesoDenegado) {
           Swal.fire({
             title: 'Acceso Denegado',
             text: `Este usuario debe estar aprobado para poder ingresar al sistema, contactese con un usuario administrador para continuar`,
@@ -36,10 +36,10 @@ export class ProfesionalComponent implements OnInit, OnDestroy {
             backdrop: true,
           });
         }
-      } 
+      }
 
-      if(this.profesional.habilitado) {
-        if(this.alertaAccesoDenegado) {
+      if (this.profesional.habilitado) {
+        if (this.alertaAccesoDenegado) {
           this.alertaAccesoDenegado.close();
           this.alertaAccesoDenegado = null;
         }
@@ -50,4 +50,4 @@ export class ProfesionalComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-} 
+}

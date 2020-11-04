@@ -36,7 +36,7 @@ export class TurnosProfesionalDetallesComponent implements OnInit {
       showCancelButton: true,
       inputValidator: (value) => {
         if (!value) {
-          return 'Este campo es obligatorio!'
+          return 'Este campo es obligatorio!';
         }
         this.turnosSvc.cancelarTurnoProfesional(docId, value);
       }

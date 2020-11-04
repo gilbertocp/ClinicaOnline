@@ -8,34 +8,35 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root'
 })
 export class PerfilGuard implements CanActivate {
-  
+
   constructor(
     private authSvc: AuthService,
     private router: Router,
   ) { }
-  
+
   canActivate(): Observable<boolean>{
     return this.authSvc.user$.pipe(map(user => {
 
-      if(!user)
+      if (!user) {
         return false;
+      }
 
-      switch(user.perfil) {
+      switch (user.perfil) {
         case 'administrador':
           this.router.navigate(['perfil/admin']);
-        break;
+          break;
 
         case 'profesional':
           this.router.navigate(['perfil/profesional']);
-        break;
+          break;
 
         case 'paciente':
           this.router.navigate(['perfil/paciente']);
-        break;
+          break;
       }
 
       return true;
     }));
   }
-  
+
 }

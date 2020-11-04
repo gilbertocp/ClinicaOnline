@@ -15,12 +15,12 @@ export class PedirTurnoModalComponent implements OnInit {
   @Output() fechaHoraProfesionalSeleccionados = new EventEmitter();
   profesional: Profesional;
   fechaSeleccionada: moment.Moment;
-  horaSeleccionada:  moment.Moment;
+  horaSeleccionada: moment.Moment;
 
   constructor(private modalSvc: NgbModal) { }
 
   ngOnInit(): void {
-    
+
   }
 
   abrir(profesional) {
@@ -45,7 +45,7 @@ export class PedirTurnoModalComponent implements OnInit {
   }
 
   obtenerFecha(fecha: moment.Moment): void {
-    this.fechaSeleccionada = fecha;    
+    this.fechaSeleccionada = fecha;
   }
 
   obtenerHora(hora: moment.Moment): void {

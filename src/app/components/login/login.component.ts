@@ -24,21 +24,21 @@ export class LoginComponent implements OnInit {
   }
 
   usuarioSeleccionado({currentTarget}) {
-    switch(currentTarget.value) {
+    switch (currentTarget.value) {
       case 'administrador':
         this.correo = 'admin@admin.com';
         this.clave = '111111';
-      break;
+        break;
 
       case 'profesional':
         this.correo = 'profesional@profesional.com';
         this.clave = '111111';
-      break;
+        break;
 
       case 'paciente':
         this.correo = 'mywudduhe-8193@yopmail.com';
         this.clave = '111111';
-      break;
+        break;
     }
   }
 
@@ -60,12 +60,12 @@ export class LoginComponent implements OnInit {
         title: 'No se ha podido iniciar sesión, verifique que los campos sean correctos',
         timerProgressBar: true,
         didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
         }
       });
     });
-  
+
   }
 
 }

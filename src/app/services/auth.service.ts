@@ -19,18 +19,18 @@ export class AuthService {
   public user$: Observable<Usuario>;
 
   constructor(
-    private afAuth: AngularFireAuth, 
+    private afAuth: AngularFireAuth,
     private db: AngularFirestore,
     private router: Router
-  ) { 
+  ) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
         if (user) {
           return this.db.doc<Usuario>('usuarios/' + user.uid).snapshotChanges().pipe(map(actions => {
             const obj: Usuario = {
               docId: user.uid,
-              ...actions.payload.data() 
-            }
+              ...actions.payload.data()
+            };
             return obj;
           }));
         }
@@ -61,20 +61,20 @@ export class AuthService {
 
     return this.afAuth.authState.pipe(
       switchMap((user: User) => {
-        
-        if(user) {
-          if(tipoUsuario === 'paciente') {
+
+        if (user) {
+          if (tipoUsuario === 'paciente') {
             return this.db
             .collection<Paciente>('pacientes', ref => ref.where('docIdUsuario', '==', user.uid))
             .valueChanges({idField: 'docId'});
           }
-  
-          if(tipoUsuario === 'profesional') {
+
+          if (tipoUsuario === 'profesional') {
             return this.db
             .collection<Profesional>('profesionales', ref => ref.where('docIdUsuario', '==', user.uid))
             .valueChanges({idField: 'docId'});
           }
-          
+
           return null;
         }
 
@@ -86,5 +86,5 @@ export class AuthService {
   sendEmailVerification(firebaseUser: User): Promise<void> {
     return firebaseUser.sendEmailVerification();
   }
-  
+
 }

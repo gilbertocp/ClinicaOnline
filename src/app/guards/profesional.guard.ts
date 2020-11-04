@@ -10,19 +10,20 @@ import { AuthService } from '../services/auth.service';
 export class ProfesionalGuard implements CanActivate {
 
   constructor(
-    private authSvc: AuthService, 
+    private authSvc: AuthService,
     private router: Router
   ) { }
 
   canActivate(): Observable<boolean> {
     return this.authSvc.user$.pipe(map(user => {
-      if(user.perfil === 'profesional') 
+      if (user.perfil === 'profesional') {
         return true;
+      }
 
       console.log('Access Denied');
       this.router.navigate(['/perfil']);
-      return false;  
+      return false;
     }));
   }
-  
+
 }

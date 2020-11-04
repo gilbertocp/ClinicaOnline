@@ -20,7 +20,7 @@ export class PedirTurnoComponent implements OnInit {
 
   constructor(
     private profesionalSvc: ProfesionalService,
-    private turnosSvc: TurnosService  
+    private turnosSvc: TurnosService
   ) {  }
 
   ngOnInit(): void {
@@ -29,7 +29,7 @@ export class PedirTurnoComponent implements OnInit {
     });
   }
 
-  pedirTurno(profesional): void {   
+  pedirTurno(profesional): void {
     this.pedirTurnoModal.abrir(profesional);
   }
 
@@ -37,7 +37,7 @@ export class PedirTurnoComponent implements OnInit {
     const swalOptions: SweetAlertOptions = {
       title: 'Solicitud de turnos',
       confirmButtonText: 'Ok'
-    }
+    };
 
     this.turnosSvc.agregarTurno({
       ...obj,

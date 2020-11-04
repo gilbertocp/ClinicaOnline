@@ -10,19 +10,20 @@ import { AuthService } from '../services/auth.service';
 export class AdminGuard implements CanActivate {
 
   constructor(
-    private authSvc: AuthService, 
+    private authSvc: AuthService,
     private router: Router
   ) { }
-  
+
   canActivate(): Observable<boolean> {
     return this.authSvc.user$.pipe(map(user => {
-      if(user.perfil === 'administrador') 
+      if (user.perfil === 'administrador') {
         return true;
+      }
 
       console.log('Access Denied');
       this.router.navigate(['/perfil']);
-      return false;  
-    }));;
+      return false;
+    }));
   }
-  
+
 }

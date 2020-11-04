@@ -26,7 +26,7 @@ export class ProfesionalService {
     });
   }
 
-  guardarHorario(docId: string,dias: string[], horarioInicio: string, horarioSalida: string): void {
+  guardarHorario(docId: string, dias: string[], horarioInicio: string, horarioSalida: string): void {
     this.db.collection<Profesional>('profesionales').doc(docId).set({
       horarioInicio, horarioSalida, diasAtencion: dias, puedeAtender: true
     }, {merge: true});

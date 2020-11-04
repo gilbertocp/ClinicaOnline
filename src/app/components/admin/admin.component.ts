@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AdminComponent implements OnInit {
   solicitudes = [];
-  enEspera: boolean = false;
+  enEspera = false;
 
   constructor(
     private adminSvc: AdminService,
@@ -36,9 +36,9 @@ export class AdminComponent implements OnInit {
     this.enEspera = true;
 
     this.authSvc.register(correo, clave).then(cred => {
-      this.adminSvc.registrarAdministradorId(cred.user.uid,{
-        correo: correo,
-        clave: clave,
+      this.adminSvc.registrarAdministradorId(cred.user.uid, {
+        correo,
+        clave,
         perfil: 'administrador',
       });
 
@@ -49,7 +49,7 @@ export class AdminComponent implements OnInit {
     })
     .finally(() => {
       this.enEspera = false;
-    }); 
+    });
   }
 
   mostrarAlert(errMsj: string, duracion: number = 1000): void {

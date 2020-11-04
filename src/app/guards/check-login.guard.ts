@@ -13,7 +13,7 @@ export class CheckLoginGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     return this.authSvc.getCurrentUser().pipe(map(user => {
-      if(user)  {
+      if (user)  {
         return true;
       }
 
@@ -21,5 +21,5 @@ export class CheckLoginGuard implements CanActivate {
       return false;
     }));
   }
-  
+
 }

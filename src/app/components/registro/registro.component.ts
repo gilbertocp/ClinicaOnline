@@ -23,24 +23,24 @@ export class RegistroComponent implements OnInit {
   correo: string;
   clave: string;
   imagenes = [];
-  especialidad: string = '';  
+  especialidad = '';
   especialidades: string[] = [];
   ocultar = true;
   enEspera = false;
   siteKey = environment.captchaKey;
   // cambiado a true para debuggear
-  captchaVerificado: boolean = true;
+  captchaVerificado = true;
   @ViewChild('inputFile', {static: false}) inputFile: ElementRef;
 
   constructor(
-    private authSvc: AuthService, 
+    private authSvc: AuthService,
     private storage: AngularFireStorage,
     private usuariosSvc: UsuariosService,
     private profesionalesSvc: ProfesionalService,
     private pacientesSvc: PacienteService,
     private router: Router,
     private solicitudesSvc: SolicitudesService,
-  ) { } 
+  ) { }
 
   ngOnInit(): void {
   }
@@ -52,24 +52,24 @@ export class RegistroComponent implements OnInit {
       timerProgressBar: true,
       backdrop: true
     });
-  
 
-    if(!this.perfil) {
+
+    if (!this.perfil) {
       alerta.fire({titleText: 'Tiene que especificar el tipo de perfil a registrar'});
       return;
     }
 
-    if(!this.captchaVerificado) {
+    if (!this.captchaVerificado) {
       alerta.fire({titleText: 'Verifique el captcha primero'});
       return;
     }
 
-    if(this.perfil === 'paciente' && this.imagenes.length !== 2) {
+    if (this.perfil === 'paciente' && this.imagenes.length !== 2) {
       alerta.fire({titleText: 'Tiene que subir dos fotos para ingresar'});
       return;
     }
 
-    if(this.perfil === 'profesional' && this.especialidades.length === 0 ) {
+    if (this.perfil === 'profesional' && this.especialidades.length === 0 ) {
       alerta.fire({titleText: 'Tiene que agregar al menos una especialidad'});
       return;
     }
@@ -78,8 +78,8 @@ export class RegistroComponent implements OnInit {
 
     this.authSvc.register(this.correo, this.clave).then(cred => {
 
-      if(this.perfil === 'profesional') {
-        this.usuariosSvc.addUsuarioWithId(cred.user.uid,{
+      if (this.perfil === 'profesional') {
+        this.usuariosSvc.addUsuarioWithId(cred.user.uid, {
           correo: this.correo,
           clave: this.clave,
           perfil: 'profesional'
@@ -98,11 +98,11 @@ export class RegistroComponent implements OnInit {
 
         this.enEspera = false;
         this.router.navigate(['perfil']);
-      } 
+      }
 
-      if(this.perfil === 'paciente') {
+      if (this.perfil === 'paciente') {
         const fecha = new Date();
-        const fechaYHoraStr = `${fecha.getDay()}-${fecha.getMonth()}-${fecha.getFullYear()}` + 
+        const fechaYHoraStr = `${fecha.getDay()}-${fecha.getMonth()}-${fecha.getFullYear()}` +
                               ` ${fecha.getHours()}:${fecha.getMinutes()}:${fecha.getSeconds()}`;
 
         const uTask1 = this.storage.upload(`imagenes/${fechaYHoraStr}__${Math.random().toString(36).slice(-8)}`, this.imagenes[0]);
@@ -111,7 +111,7 @@ export class RegistroComponent implements OnInit {
         Promise.all([uTask1, uTask2]).then(async tasks =>  {
 
           this.usuariosSvc.addUsuarioWithId(
-            cred.user.uid, 
+            cred.user.uid,
             {
               correo: this.correo,
               clave: this.clave,
@@ -143,21 +143,21 @@ export class RegistroComponent implements OnInit {
   }
 
   imagenesSubidas({currentTarget}): void {
-    for(const imagen of currentTarget.files) {
+    for (const imagen of currentTarget.files) {
       this.imagenes.push(imagen);
     }
   }
 
   agregarEspecialidad(): void {
-    if(this.especialidad !== '' && !this.especialidades.includes(this.especialidad)) {
+    if (this.especialidad !== '' && !this.especialidades.includes(this.especialidad)) {
       console.log(this.especialidad);
-      
+
       this.especialidades.push(this.especialidad.trim());
       this.especialidad = '';
     }
   }
 
   eliminarEspecialidad(especialidad: string): void {
-    this.especialidades.splice(this.especialidades.indexOf(especialidad), 1);    
+    this.especialidades.splice(this.especialidades.indexOf(especialidad), 1);
   }
 }

@@ -18,13 +18,13 @@ export class TurnosService {
 
   turnosPaciente(docId: string): Observable<Turno[]> {
     return this.db
-    .collection<Turno>('turnos', 
+    .collection<Turno>('turnos',
     ref => ref.where('docIdPaciente', '==', docId).where('estado', 'in', [TurnoEstado.enEspera, TurnoEstado.confirmado]))
     .valueChanges({idField: 'docId'});
   }
 
   turnosProfesional(docId: string): Observable<Turno[]> {
-    return this.db.collection<Turno>('turnos', 
+    return this.db.collection<Turno>('turnos',
     ref => ref.where('docIdProfesional', '==', docId).orderBy('fecha', 'desc'))
     .valueChanges({idField: 'docId'});
     // return this.db.collection<Turno>('turnos', ref => ref.where('docIdProfesional', '==', docId)).valueChanges({idField: 'docId'});
@@ -32,8 +32,9 @@ export class TurnosService {
 
   turnosPacientesPasados(docId: string): Observable<Turno[]> {
     return this.db
-    .collection<Turno>('turnos', 
-    ref => ref.where('docIdPaciente', '==', docId).where('estado', 'in', [TurnoEstado.canceladoPaciente, TurnoEstado.finalizado, TurnoEstado.rechazadoProfesional]))
+    .collection<Turno>('turnos',
+    ref => ref.where('docIdPaciente', '==', docId)
+    .where('estado', 'in', [TurnoEstado.canceladoPaciente, TurnoEstado.finalizado, TurnoEstado.rechazadoProfesional]))
     .valueChanges({idField: 'docId'});
   }
 
@@ -44,7 +45,9 @@ export class TurnosService {
   }
 
   cancelarTurnoProfesional(docId: string, resenia: string): void {
-    this.db.collection<Turno>('turnos').doc(docId).set({reseniaProfesional: resenia, estado: TurnoEstado.rechazadoProfesional}, {merge: true});
+    this.db.collection<Turno>('turnos').doc(docId)
+    .set({reseniaProfesional: resenia, estado: TurnoEstado.rechazadoProfesional},
+    {merge: true});
   }
 
   cancelarTurnoPaciente(docId: string): void {

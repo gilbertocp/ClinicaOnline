@@ -18,19 +18,19 @@ export class FechasComponent implements OnInit {
     locale: moment.locale('es'),
     showNearMonthDays: false,
     isDayDisabledCallback: (date) => {
-      return  !this.profesional.diasAtencion.includes(DIAS[date.weekday()]) || 
-              date.weekday() === 6 || 
-              date < moment({hour: 0, minute: 0, second: 0, millisecond: 0}) || 
-              date > moment({hour: 0, minute: 0, second: 0, millisecond: 0}).add(15, 'days')
+      return  !this.profesional.diasAtencion.includes(DIAS[date.weekday()]) ||
+              date.weekday() === 6 ||
+              date < moment({hour: 0, minute: 0, second: 0, millisecond: 0}) ||
+              date > moment({hour: 0, minute: 0, second: 0, millisecond: 0}).add(15, 'days');
     }
-  }
+  };
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  seleccionado(fecha: moment.Moment) {
+  seleccionado(fecha: moment.Moment): void {
     this.fechaSeleccionada.emit(fecha);
   }
 }

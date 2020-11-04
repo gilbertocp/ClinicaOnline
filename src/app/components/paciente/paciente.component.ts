@@ -23,12 +23,12 @@ export class PacienteComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
 
       this.authSvc.getCurrentUserData('paciente').subscribe(user => {
-        this.paciente = user[0];  
+        this.paciente = user[0];
         console.log(this.paciente);
       }),
 
       this.authSvc.getCurrentUser().subscribe(user => {
-        if(!user.emailVerified)  {
+        if (!user.emailVerified)  {
           this.alertaConfirmarCorreo = Swal.fire({
             title: 'Acceso Denegado',
             text: `Se ha enviado un email de confirmación a ${user.email}, Por favor confirme su correo electrónico para ingresar al sistema`,
@@ -40,10 +40,10 @@ export class PacienteComponent implements OnInit, OnDestroy {
             allowEscapeKey: false,
             backdrop: true,
           });
-        } 
-        
-        if(user.emailVerified) {
-          if(this.alertaConfirmarCorreo) {
+        }
+
+        if (user.emailVerified) {
+          if (this.alertaConfirmarCorreo) {
             this.alertaConfirmarCorreo.close();
             this.alertaConfirmarCorreo = null;
           }

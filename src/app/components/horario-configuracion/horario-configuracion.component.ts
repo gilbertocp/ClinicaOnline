@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Profesional } from 'src/app/models/profesional';
 import { ProfesionalService } from 'src/app/services/profesional.service';
-// import * as moment from 'moment';
 
 @Component({
   selector: 'app-horario-configuracion',
@@ -15,7 +14,7 @@ export class HorarioConfiguracionComponent implements OnInit {
   constructor(private profesionalSvc: ProfesionalService) { }
 
   ngOnInit(): void {
-    if(!this.profesional.puedeAtender) {
+    if (!this.profesional.puedeAtender) {
       return;
     }
 
@@ -24,13 +23,13 @@ export class HorarioConfiguracionComponent implements OnInit {
   }
 
   marcarCheckBoxes(): void {
-    if(this.profesional) {
+    if (this.profesional) {
       const checkBoxes = document.querySelectorAll('.form-check-input') as NodeListOf<HTMLInputElement>;
       checkBoxes.forEach(el => {
-        if(this.profesional.diasAtencion.includes(el.value)) {
+        if (this.profesional.diasAtencion.includes(el.value)) {
           el.checked = true;
         }
-      });      
+      });
     }
   }
 
@@ -40,43 +39,16 @@ export class HorarioConfiguracionComponent implements OnInit {
   }
 
   guardarHorario(profesional: Profesional): void {
-    const horaInicioStr:string = (document.querySelector('#horaInicio') as HTMLInputElement).value; 
+    const horaInicioStr: string = (document.querySelector('#horaInicio') as HTMLInputElement).value;
     const horaSalidaStr: string =  (document.querySelector('#horaSalida') as HTMLInputElement).value;
 
-    if(!horaInicioStr || !horaSalidaStr) {
-      this.mostrarAlert('Los campos no deben estar vacios', 2500);
+    if (!horaInicioStr || !horaSalidaStr) {
+      console.log('Los campos no deben estar vacios');
       return;
     }
-    // let inicio = moment().add(horaInicioStr.split(':')[0], 'h');
-    // inicio = moment().add(horaInicioStr.split(':')[0], 'm');
 
-    // console.log(inicio);
-    
     const dias = document.querySelectorAll('.form-check-input:checked') as NodeListOf<HTMLInputElement>;
-    // this.generarHorario(horaInicioStr, horaSalidaStr);
     this.profesionalSvc.guardarHorario(profesional.docId, Array.from(dias).map(el => el.value), horaInicioStr, horaSalidaStr);
   }
-
   
-  // generarHorario(horaInicio: string, horaSalida:string) {
-  //   let hi = parseInt(horaInicio.split(':')[0]);
-  //   let mi = parseInt(horaInicio.split(':')[1]);
-  //   let hs = parseInt(horaSalida.split(':')[0]);
-  //   let ms = parseInt(horaSalida.split(':')[1]);
-  //   let hora = new Date()
-  //   let horario = []; 
-  //   for(let i = hi, y = mi; i < hs ; i++, y+=60) {
-  //     horario.push(i + ':' + y);
-  //     horario.push(i + ':' + y+30);
-  //   }
-  //   console.log(horario);
-  // }
-
-  mostrarAlert(errMsj: string, duracion: number = 1000): void {
-    const alert = document.querySelector('#alert-form');
-    document.querySelector('#alert-text').innerHTML = errMsj;
-    alert.classList.add('show');
-    setTimeout(() => alert.classList.remove('show'), duracion);
-  }
-
-} 
+}
