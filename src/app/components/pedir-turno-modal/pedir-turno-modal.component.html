@@ -15,15 +15,12 @@
         <b>Fecha seleccionada:</b>&nbsp;<span class="text-info">{{ fechaSeleccionada | date }}</span>
       </p>
 
-      <app-horas *ngIf="fechaSeleccionada" [profesional]="profesional" (horaSeleccionado)="obtenerHora($event)"></app-horas>
+      <app-horas *ngIf="fechaSeleccionada" [profesional]="profesional" [fechaSeleccionada]="fechaSeleccionada" (horaSeleccionado)="obtenerHora($event)"></app-horas>
 
       <p *ngIf="horaSeleccionada">
-        <!-- {{ hora.get("hours") }}:{{
-          hora.get("minutes") === 0 ? "00" : hora.get("minutes")
-        }} -->
         <b>Hora seleccionada:</b>&nbsp;
         <span class="text-info">
-          {{ horaSeleccionada.get("hours") }}:{{ horaSeleccionada.get("minutes") === 0 ? "00" : horaSeleccionada.get("minutes")}}
+          {{ horaSeleccionada.format('HH:mm') }}
         </span>
       </p>
     </div>

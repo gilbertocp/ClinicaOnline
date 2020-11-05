@@ -1,4 +1,6 @@
 import { TurnoEstado } from './turno-estado.enum';
+import { ReseniaProfesional } from './reseniaProfesional';
+import { ReseniaPaciente } from './reseniaPaciente';
 
 export interface Turno {
   docId?: string;
@@ -8,6 +10,6 @@ export interface Turno {
   hora: string;
   estado: TurnoEstado;
   motivoRechazo?: string;
-  reseniaProfesional?: string;
-  reseniaPaciente?: string;
+  reseniaProfesional?: ReseniaProfesional;
+  reseniaPaciente?: ReseniaPaciente;
 }

@@ -31,6 +31,8 @@ import { FechasComponent } from './components/fechas/fechas.component';
 import { FiltroProfesionalesComponent } from './components/filtro-profesionales/filtro-profesionales.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { PedirTurnoModalComponent } from './components/pedir-turno-modal/pedir-turno-modal.component';
+import { ReseniaPacienteModalComponent } from './components/resenia-paciente-modal/resenia-paciente-modal.component';
+import { ReseniaProfesionalModalComponent } from './components/resenia-profesional-modal/resenia-profesional-modal.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { PedirTurnoModalComponent } from './components/pedir-turno-modal/pedir-t
     FechasComponent,
     FiltroProfesionalesComponent,
     PedirTurnoModalComponent,
+    ReseniaPacienteModalComponent,
+    ReseniaProfesionalModalComponent,
   ],
   imports: [
     BrowserModule,

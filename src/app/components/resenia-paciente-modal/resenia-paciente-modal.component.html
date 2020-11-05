@@ -1,0 +1,61 @@
+<ng-template #modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Encuesta Paciente</h5>
+      <button type="button" class="close" (click)="cerrar()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <p>Experiencia con el profesional? </p>
+        </div>
+        <div class="col-sm-6">
+          <ngb-rating [max]="5" name="profesionalPuntaje" [readonly]="soloLectura" [(rate)]="profesionalPuntaje"></ngb-rating>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <p>Condición de las instalaciones? </p>
+        </div>
+        <div class="col-sm-6">
+          <ngb-rating [max]="5" name="instalacionesPuntaje" [readonly]="soloLectura" [(rate)]="instalacionesPuntaje"></ngb-rating>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <p>Recomendaría a otra persona el profesional?</p>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" [disabled]="soloLectura" [(ngModel)]="sugerenciaATerceros" name="sugerenciaATerceros" value="Si">
+              <label class="form-check-label">Si</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" [disabled]="soloLectura" [(ngModel)]="sugerenciaATerceros" name="sugerenciaATerceros" value="No">
+              <label class="form-check-label">No</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Algún feedback para el profesional? <span class="text-info">(Opcional)</span></label>
+        <textarea name="feedBack" class="form-control" [disabled]="soloLectura" [(ngModel)]="feedBack" cols="30" rows="5"></textarea>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" *ngIf="!soloLectura" class="btn btn-primary" (click)="guardarEncuesta()">
+        Guardar
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="cerrar()">
+        Cerrar
+      </button>
+    </div>
+  </div>
+</ng-template>

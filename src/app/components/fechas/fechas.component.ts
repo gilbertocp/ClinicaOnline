@@ -20,9 +20,9 @@ export class FechasComponent implements OnInit {
     isDayDisabledCallback: (date) => {
       return  !this.profesional.diasAtencion.includes(DIAS[date.weekday()]) ||
               date.weekday() === 6 ||
-              date < moment({hour: 0, minute: 0, second: 0, millisecond: 0}) ||
+              date <= moment({hour: 0, minute: 0, second: 0, millisecond: 0}) ||
               date > moment({hour: 0, minute: 0, second: 0, millisecond: 0}).add(15, 'days');
-    }
+    },
   };
 
   constructor() { }

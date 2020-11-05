@@ -13,6 +13,7 @@ import { TurnoEstado } from 'src/app/models/turno-estado.enum';
 export class HorasComponent implements OnInit {
 
   @Input() profesional: Profesional;
+  @Input() fechaSeleccionada: moment.Moment;
   @Output() horaSeleccionado = new EventEmitter<moment.Moment>();
   horaSeleccionadaBtn: HTMLButtonElement;
   turnos: Turno[];
@@ -44,14 +45,10 @@ export class HorasComponent implements OnInit {
   }
 
   estaReservado(hora: moment.Moment): boolean {
-    const momentDateTimeStr = hora.get('hours') + hora.get('minutes') === 0 ? '00' : hora.get('minutes');
-    console.log(momentDateTimeStr);
-
     return this.turnos.some(turno => {
       if (turno.estado === TurnoEstado.enEspera || turno.estado === TurnoEstado.confirmado) {
-        return momentDateTimeStr === turno.hora;
+        return hora.format('HH:mm') === turno.hora;
       }
-
       return false;
     });
   }
