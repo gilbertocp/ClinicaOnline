@@ -1,12 +1,12 @@
 <ng-template #modal>
-  <div class="modal-content">
+  <div class="modal-content" >
     <div class="modal-header">
       <h5 class="modal-title">Encuesta Paciente</h5>
       <button type="button" class="close" (click)="cerrar()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" id="encuesta">
       <div class="row">
         <div class="col-sm-6">
           <p>Experiencia con el profesional? </p>
@@ -50,6 +50,7 @@
     </div>
 
     <div class="modal-footer">
+      <a class="text-start" *ngIf="soloLectura" (click)="generarPDF()">Descargar PDF</a>
       <button type="button" *ngIf="!soloLectura" class="btn btn-primary" (click)="guardarEncuesta()">
         Guardar
       </button>

@@ -5,6 +5,8 @@ import { ReseniaPaciente } from '../../models/reseniaPaciente';
 import { Turno } from '../../models/turno';
 import Swal from 'sweetalert2';
 import { TurnosService } from '../../services/turnos.service';
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-resenia-paciente-modal',
@@ -107,5 +109,20 @@ export class ReseniaPacienteModalComponent implements OnInit {
     .finally(() => {
       this.cerrar();
     });
+  }
+
+  generarPDF(): void {
+    const data = document.getElementById('encuesta');  
+    html2canvas(data).then(canvas => {  
+      const imgWidth = 208;   
+      const imgHeight = canvas.height * imgWidth / canvas.width;  
+  
+      const contentDataURL = canvas.toDataURL('image/png')  
+      const pdf = new jspdf.jsPDF('p', 'mm', 'a4'); 
+      const position = 0;  
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+      pdf.setFontSize(20);
+      pdf.save('resenia_paciente.pdf');
+    });  
   }
 }

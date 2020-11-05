@@ -6,7 +6,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" id="encuesta">
       <form #formulario>
         <div class="form-row">
           <div class="col">
@@ -37,6 +37,7 @@
       </form>
     </div>
     <div class="modal-footer">
+      <a class="text-start" *ngIf="soloLectura" (click)="generarPDF()">Descargar PDF</a>
       <button type="button" *ngIf="!soloLectura" class="btn btn-primary" (click)="guardarResenia()">
         Guardar
       </button>
