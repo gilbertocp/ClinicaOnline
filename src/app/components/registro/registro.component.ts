@@ -29,7 +29,7 @@ export class RegistroComponent implements OnInit {
   enEspera = false;
   siteKey = environment.captchaKey;
   // cambiado a true para debuggear
-  captchaVerificado = true;
+  captchaVerificado = false;
   @ViewChild('inputFile', {static: false}) inputFile: ElementRef;
 
   constructor(
@@ -93,8 +93,10 @@ export class RegistroComponent implements OnInit {
           puedeAtender: false,
           nombre: this.nombre,
           apellido: this.apellido
+        })
+        .then(doc => {
+          this.profesionalesSvc.enviarSolicitudAprobacion(doc.id, cred.user.email);
         });
-        this.profesionalesSvc.enviarSolicitudAprobacion(cred.user.uid, cred.user.email);
 
         this.enEspera = false;
         this.router.navigate(['perfil']);

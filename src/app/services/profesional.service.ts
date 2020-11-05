@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Profesional } from '../models/profesional';
 
@@ -10,8 +10,8 @@ export class ProfesionalService {
 
   constructor(private db: AngularFirestore) { }
 
-  guardarProfesional(profesional: Profesional): void {
-    this.db.collection<Profesional>('profesionales').add(profesional);
+  guardarProfesional(profesional: Profesional): Promise<DocumentReference> {
+    return this.db.collection<Profesional>('profesionales').add(profesional);
   }
 
   obtenerProfesionales(): Observable<Profesional[]> {
