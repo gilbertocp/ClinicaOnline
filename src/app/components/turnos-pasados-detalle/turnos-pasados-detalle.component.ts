@@ -3,6 +3,7 @@ import { Profesional } from 'src/app/models/profesional';
 import { Turno } from 'src/app/models/turno';
 import { TurnosService } from '../../services/turnos.service';
 import { Paciente } from '../../models/paciente';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-turnos-pasados-detalle',
@@ -23,7 +24,13 @@ export class TurnosPasadosDetalleComponent implements OnInit {
     });
   }
 
-  setearResenia(resenia: string): void {
-    this.resenia = resenia;
+  mostrarReseniaProfesional(resenia: string): void {
+    Swal.fire({
+      title: 'Reseña del profesional',
+      text: resenia,
+      icon: 'info',
+      backdrop: true,
+      timer: 2000
+    })
   }
 }
