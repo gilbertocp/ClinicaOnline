@@ -147,7 +147,7 @@ export class ReseniaProfesionalModalComponent implements OnInit {
       const position = 0;  
       pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
       pdf.setFontSize(20);
-      pdf.save('resenia_paciente.pdf');
+      pdf.save('resenia_profesional.pdf');
     });  
   }
 }
