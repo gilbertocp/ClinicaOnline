@@ -1,6 +1,12 @@
-<img style="float:left" height="90" src="/docs/img/cruz-roja.png" width="100"><span style="font-size:55px">&nbsp;<a href="https://clinicaonline-4cda1.web.app/">Clínica Online</a></span>
+
+## :pushpin: <a href="https://clinicaonline-4cda1.web.app/">Link a la página</a> :pushpin:
+ 
+--- 
+
+<img src="docs/img/brand.png" width="700" height="350">
 
 ---
+
 
 ## Login de la web
 
