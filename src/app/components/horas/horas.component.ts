@@ -47,7 +47,7 @@ export class HorasComponent implements OnInit {
   estaReservado(hora: moment.Moment): boolean {
     return this.turnos.some(turno => {
       if (turno.estado === TurnoEstado.enEspera || turno.estado === TurnoEstado.confirmado) {
-        return hora.format('HH:mm') === turno.hora;
+        return hora.format('HH:mm') === turno.hora && turno.fecha === this.fechaSeleccionada.format('DD/MM/YYYY');
       }
       return false;
     });
