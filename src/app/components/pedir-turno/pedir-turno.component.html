@@ -1,3 +1,4 @@
+<app-filtro-profesionales *ngIf="profesionales" [profesionales]="profesionales" (profesionalesFiltrados)="filtroProfesionales($event)"></app-filtro-profesionales>
 <div class="table-responsive">
   <table class="table table-light table-striped table-hover text-center">
     <thead class="thead-dark">
@@ -11,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let profesional of profesionales">
+      <tr *ngFor="let profesional of profesionalesVista">
         <td>{{ profesional.nombre }}</td>
         <td>{{ profesional.apellido }}</td>
         <td>{{ profesional.especialidades }}</td>

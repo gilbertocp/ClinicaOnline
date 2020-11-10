@@ -17,6 +17,7 @@ export class PedirTurnoComponent implements OnInit {
   @ViewChild('pedirTurnoModal') pedirTurnoModal: PedirTurnoModalComponent;
   @Input() paciente: Paciente;
   profesionales: Profesional[];
+  profesionalesVista: Profesional[];
 
   constructor(
     private profesionalSvc: ProfesionalService,
@@ -26,6 +27,7 @@ export class PedirTurnoComponent implements OnInit {
   ngOnInit(): void {
     this.profesionalSvc.obtenerProfesionales().subscribe(profesionales => {
       this.profesionales = profesionales;
+      this.profesionalesVista = profesionales;
     });
   }
 
@@ -57,4 +59,7 @@ export class PedirTurnoComponent implements OnInit {
 
   }
 
+  filtroProfesionales(pF: Profesional[]): void {
+    this.profesionalesVista = pF;
+  }
 }

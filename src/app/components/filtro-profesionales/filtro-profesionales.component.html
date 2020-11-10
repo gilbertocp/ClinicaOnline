@@ -1,18 +1,23 @@
 <div class="input-group">
   <div class="input-group-prepend">
-    <select class="custom-select" name="filtro" [(ngModel)]="filtro" (change)="cambiarFiltro()">
+    <select class="custom-select" name="condicion" [(ngModel)]="condicion" (change)="cambiarFiltro()">
       <option value="apellido">Apellido</option>
       <option value="dia">Dias</option>
       <option value="especialidad">Especialidad</option>
     </select>
   </div>
-  <input *ngIf="filtro === 'apellido' || filtro === 'especialidad'" #filtroTxt type="text" name="valor" [(ngModel)]="valor" class="form-control rounded-right">
-  <select *ngIf="filtro === 'dia'" name="valor" [(ngModel)]="filtro" class="custom-select">
+  <input type="text" #apellido class="form-control" name="filtro" placeholder="Escriba el apellido del profesional" *ngIf="condicion === 'apellido'" (keyup)="filtrar(apellido.value)">
+  
+  <select *ngIf="condicion === 'dia'" #dias name="filtro" placeholder="Seleccione el día de la semana" class="custom-select" (change)="filtrar(dias.value)">
     <option value="lunes" selected>Lunes</option>
     <option value="martes">Martes</option>
     <option value="miercoles">Miércoles</option>
     <option value="jueves">Jueves</option>
     <option value="viernes">Viernes</option>
     <option value="sabado">Sábado</option>
+  </select>
+
+  <select *ngIf="condicion === 'especialidad'" #especialidad name="filtro" placeholder="Seleccione una especialidad" class="custom-select" (change)="filtrar(especialidad.value)">
+    <option *ngFor="let e of especialidades" [value]="e" selected>{{e}}</option>
   </select>
 </div>
