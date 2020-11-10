@@ -1,11 +1,10 @@
-<div class="form-group">
-  <label for="fecha">Elegir Fecha</label>
-  <input
-    name="fecha"
-    (onChange)="seleccionado($event)"
-    placeholder="Haga click para seleccionar una fecha."
-    [dpDayPicker]="configuracionCalendario"
-    class="form-control"
-    theme="dp-material"
-  />
+<h4 class="text-center">Fechas Disponibles</h4>
+<br>
+<div class="list-group d-flex justify-content-evenly" id="horarios">
+  <div class="row">
+    <div class="col-4" *ngFor="let fecha of fechas">
+      <button type="button" class="btn btn-primary btn-block" (click)="seleccionado(fecha)">{{fecha.format('DD/MM/YYYY')}}</button>
+    </div>
+  </div>
 </div>
+<br>

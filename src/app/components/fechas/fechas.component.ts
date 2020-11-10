@@ -13,24 +13,38 @@ export class FechasComponent implements OnInit {
 
   @Input() profesional: Profesional;
   @Output() fechaSeleccionada = new EventEmitter<moment.Moment>();
-  configuracionCalendario: IDatePickerConfig = {
-    format: 'DD-MM-YYYY',
-    locale: moment.locale('es'),
-    showNearMonthDays: false,
-    isDayDisabledCallback: (date) => {
-      return  !this.profesional.diasAtencion.includes(DIAS[date.weekday()]) ||
-              date.weekday() === 6 ||
-              date <= moment({hour: 0, minute: 0, second: 0, millisecond: 0}) ||
-              date > moment({hour: 0, minute: 0, second: 0, millisecond: 0}).add(15, 'days');
-    },
-  };
+  fechas: moment.Moment[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
+    this.generarFechasDisponibles();
   }
 
   seleccionado(fecha: moment.Moment): void {
     this.fechaSeleccionada.emit(fecha);
+  }
+
+  generarFechasDisponibles(): void {
+    this.fechas = [];
+
+    const fechaEnQuinceDias = moment({
+      hour: 0, 
+      minute: 0, 
+      second: 0, 
+      millisecond: 0
+    }).add(15, 'days');
+
+    for(let i = moment(); i <= fechaEnQuinceDias; i.add(1,'days')) {
+      if(
+        !(!this.profesional.diasAtencion.includes(DIAS[i.weekday()]) ||
+        i.weekday() === 6 ||
+        i <= moment({hour: 0, minute: 0, second: 0, millisecond: 0}) ||
+        i > moment({hour: 0, minute: 0, second: 0, millisecond: 0}).add(15, 'days'))
+      ) {
+        const aux = moment(i);
+        this.fechas.push(aux);
+      }
+    }
   }
 }
