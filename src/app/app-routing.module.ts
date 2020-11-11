@@ -16,20 +16,23 @@ import { ProfesionalGuard } from './guards/profesional.guard';
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'iniciarSesion',
-    component: LoginComponent
+    component: LoginComponent,
+    data: {animation: 'Login'}
   },
   {
     path: 'registrarse',
-    component: RegistroComponent
+    component: RegistroComponent,
+    data: {animation: 'Registro'}
   },
   {
     path: 'perfil',
     component: InicioComponent,
     canActivate: [CheckLoginGuard],
+    data: {animation: 'Home'},
     children: [
       {
         path: '',
@@ -44,7 +47,7 @@ const routes: Routes = [
       {
         path: 'paciente',
         component: PacienteComponent,
-        canActivate: [PacienteGuard]
+        canActivate: [PacienteGuard],
       },
       {
         path: 'profesional',
