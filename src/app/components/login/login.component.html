@@ -1,8 +1,8 @@
 <div class="container animated fadeIn fast">
-  <div class="card mt-3">
+  <div class="card mt-3" id="card">
     <div class="d-flex justify-content-center align-items-center border-dark">
-      <img src="assets/img/cruz-roja.png" class="" width="250" height="250" alt="img">
-      <span style="font-size: 100px;" id="title">Clínica Online</span>
+      <img src="assets/img/cruz-roja.png" class="" width="250" height="250" alt="img">&nbsp;
+      <span style="font-size: 80px;" id="title">{{'Clínica Online'| uppercase}}</span>
     </div>
     <form [formGroup]="formulario" (ngSubmit)="iniciarSesion()">
       <div class="card-body">

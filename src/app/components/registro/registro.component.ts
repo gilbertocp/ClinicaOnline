@@ -178,7 +178,7 @@ export class RegistroComponent implements OnInit {
   async registrarPaciente(): Promise<void> {
     this.enEspera = true;
 
-    const {nombre, apellido, perfil, clave, correo, especialidades} = this.formulario.value;
+    const {nombre, apellido, perfil, clave, correo} = this.formulario.value;
     const fechaImg = moment().format('DD-MM-YYYY HH:mm:ss');
 
     try {

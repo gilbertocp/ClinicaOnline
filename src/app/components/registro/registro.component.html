@@ -1,5 +1,5 @@
 <div class="container animated fadeIn fast">
-  <div class="card mt-3" *ngIf="!enEspera">
+  <div class="card mt-3" *ngIf="!enEspera" id="card">
     <form [formGroup]="formulario" (ngSubmit)="registrar()">
       <div class="card-body">
         <h2 class="card-title text-center mb-5">Registrarse</h2>
@@ -107,7 +107,7 @@
           </div>
         </div>
 
-        <re-captcha (resolved)="captchaVerificado = true" [siteKey]="siteKey"></re-captcha>
+        
 
         <div class="row mt-3">
           <div class="col">
