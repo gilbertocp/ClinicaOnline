@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,47 +11,36 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
 
-  correo: string;
-  clave: string;
-  ocultar = true;
-  enEspera = false;
+  formulario: FormGroup;
+  enEspera: boolean;
 
   constructor(
     private authSvc: AuthService,
     private router: Router,
-  ) { }
+    private fb: FormBuilder
+  ) { 
+    this.crearFormulario();
+  }
 
   ngOnInit(): void {
   }
 
-  usuarioSeleccionado({currentTarget}) {
-    switch (currentTarget.value) {
-      case 'administrador':
-        this.correo = 'admin@admin.com';
-        this.clave = '111111';
-        break;
-
-      case 'profesional':
-        this.correo = 'profesional@profesional.com';
-        this.clave = '111111';
-        break;
-
-      case 'paciente':
-        this.correo = 'mywudduhe-8193@yopmail.com';
-        this.clave = '111111';
-        break;
-    }
+  crearFormulario(): void {
+    this.formulario = this.fb.group({
+      correo: ['', [Validators.required]],
+      clave: ['', [Validators.required]]
+    });
   }
 
-  iniciarSesion(): void {
+  async iniciarSesion(): Promise<void> {
     this.enEspera = true;
 
-    this.authSvc.login(this.correo, this.clave).then(() => {
-      localStorage.setItem('login_user_clinica_online', Math.random().toString(36).slice(-8));
-      this.router.navigate(['perfil']);
-    })
-    .catch(() => {
-      this.enEspera = false;
+    const {correo, clave} = this.formulario.value;
+    
+    try {
+      await this.authSvc.login(correo, clave);
+      this.router.navigate(['/perfil']);
+    } catch(err) {
       Swal.fire({
         toast: true,
         icon: 'error',
@@ -64,8 +54,33 @@ export class LoginComponent implements OnInit {
           toast.addEventListener('mouseleave', Swal.resumeTimer);
         }
       });
-    });
 
+      this.enEspera = false;
+    }
   }
 
+  usuarioSeleccionado({currentTarget}) {
+    switch (currentTarget.value) {
+      case 'administrador':
+        this.formulario.setValue({
+          correo: 'admin@admin.com',
+          clave: '111111'
+        });
+      break;
+
+      case 'profesional':
+        this.formulario.setValue({
+          correo: 'micorreo@gmail.com',
+          clave: '222222'
+        }) ;
+        break;
+
+      case 'paciente':
+        this.formulario.setValue({
+          correo:'iloppalledd-3751@yopmail.com',
+          clave: '111111'
+        });
+        break;
+    }
+  }
 }

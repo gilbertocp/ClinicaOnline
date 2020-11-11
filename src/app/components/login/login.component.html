@@ -1,38 +1,45 @@
 <div class="container animated fadeIn fast">
-  <div class="mx-auto p-3 mt-3">
+  <div class="card mt-3">
     <div class="d-flex justify-content-center align-items-center border-dark">
       <img src="assets/img/cruz-roja.png" class="" width="250" height="250" alt="img">
-      <span style="font-size: 100px;" class="text-white" id="title">Clínica Online</span>
+      <span style="font-size: 100px;" id="title">Clínica Online</span>
     </div>
-    
-    <div class="card-body">
-      <div class="form-group">
-        <input type="text" name="correo" id="correo" [(ngModel)]="correo" placeholder="Correo" class="form-control rounded-pill">
-      </div>
+    <form [formGroup]="formulario" (ngSubmit)="iniciarSesion()">
+      <div class="card-body">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="correo">Correo</label>
+            <input type="email" class="form-control" formControlName="correo">
+          </div>
   
-      <div class="form-group">
-        <input type="password" name="clave" id="clave" [(ngModel)]="clave" placeholder="Clave" class="form-control rounded-pill">
-      </div>
+          <div class="form-group col-md-6">
+            <label for="clave">Contraseña</label>
+            <input type="password" class="form-control" formControlName="clave">
+          </div>     
+        </div>
 
-      <div class="form-group">
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle rounded-pill" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Usuarios
-          </button>
-          <div class="dropdown-menu">
-            <button class="dropdown-item" value="administrador" (click)="usuarioSeleccionado($event)" type="button">Administrador</button>
-            <button class="dropdown-item" value="profesional" (click)="usuarioSeleccionado($event)" type="button">Profesional</button>
-            <button class="dropdown-item" value="paciente" (click)="usuarioSeleccionado($event)" type="button">Paciente</button>
+        <div class="form-group">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Usuarios
+            </button>
+            <div class="dropdown-menu">
+              <button class="dropdown-item" value="administrador" (click)="usuarioSeleccionado($event)" type="button">Administrador</button>
+              <button class="dropdown-item" value="profesional" (click)="usuarioSeleccionado($event)" type="button">Profesional</button>
+              <button class="dropdown-item" value="paciente" (click)="usuarioSeleccionado($event)" type="button">Paciente</button>
+            </div>
           </div>
         </div>
+
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="enEspera">
+          {{enEspera?'Cargando':'Iniciar Sesión'}}&nbsp;
+          <i *ngIf="enEspera" class="fa fa-sync fa-spin"></i>
+        </button>
       </div>
+    </form>
+
+    <div class="card-footer">
+      <a routerLink="/registrarse">Desea registrarse?</a>
     </div>
-  </div>
-  <div class="card-footer bg-primary">
-    <button type="submit" class="btn btn-secondary btn-block rounded-pill" [disabled]="enEspera" (click)="iniciarSesion()">
-      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="enEspera"></span>
-      {{enEspera?'Cargando. . .':'Iniciar Sesión'}}
-    </button> <br>
-    <a routerLink="/registrarse" class="text-dark">Desea registrarse?</a>
   </div>
 </div>
