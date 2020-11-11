@@ -1,32 +1,27 @@
 <table class="table table-dark text-center" *ngIf="turnos">
   <thead>
+    <th scope="col">Paciente</th>
     <th scope="col">Hora</th>
     <th scope="col">Fecha</th>
     <th scope="col">Estado</th>
-    <th scope="col">Testimonio Paciente</th>
     <th scope="col">Confirmar</th>
     <th scope="col">Cancelar</th>
+    <th scope="col">Atender</th>
     <th scope="col">Dejar Reseña</th>
+    <th scope="col">Reseña Paciente</th>
   </thead>
   <tbody>
     <tr *ngFor="let turno of turnos">
+      <td>{{turno.apellidoPaciente}}, {{turno.nombrePaciente}}</td>
       <td>{{ turno.hora }}</td>
       <td>{{ turno.fecha }}</td>
       <td>
         {{ turno.estado | estadoTurno }}
       </td>
+
       <td>
         <button
-          class="btn btn-info btn-block rounded-pill"
-          [disabled]="!turno.reseniaPaciente"
-          (click)="verReseniaPaciente(turno.reseniaPaciente)"
-        >
-          Ver reseña paciente
-        </button>
-      </td>
-      <td>
-        <button
-          class="btn btn-block btn-primary rounded-pill"
+          class="btn btn-block btn-primary"
           [disabled]="
             turno.reseniaProfesional || turno.motivoRechazo || turno.estado === 3 || turno.estado === 0 || turno.estado === 4
           "
@@ -37,17 +32,30 @@
       </td>
       <td>
         <button
-          class="btn btn-block btn-danger rounded-pill"
+          class="btn btn-block btn-danger"
           [disabled]="turno.reseniaProfesional || turno.motivoRechazo || turno.estado === 3 || turno.estado === 4"
           (click)="cancelarTurno(turno.docId)"
         >
-          {{turno.estado === 2? 'Turno Cancelado':'Cancelar Turno'}}
+          {{turno.estado === 2? 'Cancelado':'Cancelar'}}
         </button>
       </td>
       <td>
-        <button [disabled]="turno.estado !== 4" *ngIf="!turno.reseniaProfesional" class="btn btn-block btn-success rounded-pill" (click)="dejarResenia(turno)">Dejar Reseña</button>
+        <button class="btn btn-light btn-block" [disabled]="turno.estado !== 0" (click)="atender(turno.docId)">Atender</button>
+      </td>
+      <td>
+        <button [disabled]="turno.estado !== 4" *ngIf="!turno.reseniaProfesional" class="btn btn-block btn-success" (click)="dejarResenia(turno)">Dejar Reseña</button>
         <button *ngIf="turno.reseniaProfesional" class="btn btn-block btn-success rounded-pill" (click)="verReseniaProfesionalCompletada(turno.reseniaProfesional)">
           Ver mi reseña
+        </button>
+      </td>
+
+      <td>
+        <button
+          class="btn btn-info btn-block"
+          [disabled]="!turno.reseniaPaciente"
+          (click)="verReseniaPaciente(turno.reseniaPaciente)"
+        >
+          Ver reseña paciente
         </button>
       </td>
     </tr>

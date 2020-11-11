@@ -11,5 +11,9 @@ export interface Turno {
   estado: TurnoEstado;
   motivoRechazo?: string;
   reseniaProfesional?: ReseniaProfesional;
-  reseniaPaciente?: ReseniaPaciente;
+  reseniaPaciente?: ReseniaPaciente,
+  nombreProfesional: string,
+  apellidoProfesional: string,
+  nombrePaciente: string,
+  apellidoPaciente: string
 }

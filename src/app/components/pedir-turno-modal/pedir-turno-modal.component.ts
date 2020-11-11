@@ -56,7 +56,9 @@ export class PedirTurnoModalComponent implements OnInit {
     this.fechaHoraProfesionalSeleccionados.emit({
       fecha: this.fechaSeleccionada.format('DD/MM/YYYY'),
       hora: this.horaSeleccionada.format('HH:mm'),
-      docIdProfesional: this.profesional.docId
+      docIdProfesional: this.profesional.docId,
+      nombreProfesional: this.profesional.nombre,
+      apellidoProfesional: this.profesional.apellido
     });
     this.cerrar();
   }

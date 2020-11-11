@@ -35,7 +35,9 @@ export class PedirTurnoComponent implements OnInit {
     this.pedirTurnoModal.abrir(profesional);
   }
 
-  sacarTurno(obj: any): void {
+  sacarTurno(obj: {fecha: string, hora: string, docIdProfesional: string, 
+    nombreProfesional: string, apellidoProfesional: string}): void {
+
     const swalOptions: SweetAlertOptions = {
       title: 'Solicitud de turnos',
       confirmButtonText: 'Ok'
@@ -44,7 +46,9 @@ export class PedirTurnoComponent implements OnInit {
     this.turnosSvc.agregarTurno({
       ...obj,
       estado: TurnoEstado.enEspera,
-      docIdPaciente: this.paciente.docId
+      docIdPaciente: this.paciente.docId,
+      nombrePaciente: this.paciente.nombre,
+      apellidoPaciente: this.paciente.apellido
     }).then(() => {
       swalOptions.icon = 'success';
       swalOptions.text = 'El turno ha sido solicitado!';

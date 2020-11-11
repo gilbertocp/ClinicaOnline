@@ -68,6 +68,10 @@ export class TurnosService {
     return this.db.collection<Turno>('turnos').doc(docId).set({reseniaPaciente: resenia}, {merge: true});
   }
 
+  atenderTurno(docId:string): void {
+    this.db.collection<Turno>('turnos').doc(docId).set({estado: TurnoEstado.finalizado}, {merge: true});
+  }
+
   private finDelTurno(docId: string): void {
     this.db.collection<Turno>('turnos').doc(docId).set({estado: TurnoEstado.finalizado}, {merge: true});
   }

@@ -27,6 +27,8 @@ export class TurnosProfesionalDetallesComponent implements OnInit {
   ngOnInit(): void {
     this.turnosSvc.turnosProfesional(this.profesional.docId).subscribe(turnos => {
       this.turnos = turnos;
+      console.log(turnos);
+      
     });
   }
 
@@ -59,5 +61,9 @@ export class TurnosProfesionalDetallesComponent implements OnInit {
 
   verReseniaProfesionalCompletada(resenia: ReseniaProfesional): void {
     this.reseniaProfesionalModal.abrir(null, resenia);
+  }
+
+  atender(docId: string): void {
+    this.turnosSvc.atenderTurno(docId);    
   }
 }
