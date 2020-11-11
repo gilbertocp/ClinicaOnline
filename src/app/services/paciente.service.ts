@@ -17,4 +17,7 @@ export class PacienteService {
   obtenerPaciente(): Observable<Paciente[]> {
     return this.db.collection<Paciente>('pacientes').valueChanges({idField: 'docId'});
   }
+
+  guardarTurnoPaciente(): void {
+  }
 }

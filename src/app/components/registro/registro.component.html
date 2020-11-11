@@ -1,84 +1,131 @@
 <div class="container animated fadeIn fast">
-  <div class="mx-auto p-3 mt-3 bg-primary">
-    <h1 class="text-center text-white">Registro</h1>    
-    <div class="card-body">
+  <div class="card mt-3" *ngIf="!enEspera">
+    <form [formGroup]="formulario" (ngSubmit)="registrar()">
+      <div class="card-body">
+        <h2 class="card-title text-center mb-5">Registrarse</h2>
+        <div class="form-row">
 
-      <div class="form-group">
-        <input type="text" name="nombre" id="nombre" [(ngModel)]="nombre" placeholder="Nombre" class="form-control rounded-pill">
-      </div>
+          <div class="form-group col-md-6">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" formControlName="nombre" [class.is-invalid]="nombreNoValido">
+            <small class="text-danger" *ngIf="nombreNoValido">Este campo es requerido</small>
+          </div>
 
-      <div class="form-group">
-        <input type="text" name="apellido" id="apellido" [(ngModel)]="apellido" placeholder="Apellido" class="form-control rounded-pill">
-      </div>
+          <div class="form-group col-md-6">
+            <label for="apellido">Apellido</label>
+            <input type="text" class="form-control" formControlName="apellido" [class.is-invalid]="apellidoNoValido">
+            <small class="text-danger" *ngIf="apellidoNoValido">Este campo es requerido</small>
+          </div>
 
-      <div class="form-group">
-        <input type="text" name="correo" id="correo" [(ngModel)]="correo" placeholder="Correo" class="form-control rounded-pill">
-      </div>
-  
-      <div class="form-group">
-        <input type="password" name="clave" id="clave" [(ngModel)]="clave" placeholder="Clave" class="form-control rounded-pill">
-      </div>
-
-      <div class="form-group">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" [(ngModel)]="perfil" name="perfil" value="profesional">
-          <label class="form-check-label text-white">Profesional</label>
         </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" [(ngModel)]="perfil" name="perfil" value="paciente">
-          <label class="form-check-label text-white">Paciente</label>
-        </div>
-      </div>
 
-      <div *ngIf="perfil === 'profesional'" class="form-group mt-3">
-        <ul class="list-group list-group-horizontal my-3">
-          <li class="list-group-item bg-primary text-white" *ngFor="let especialidad of especialidades">
-            <span>{{especialidad}}</span> &nbsp;
-            <button class="btn btn-primary rounded-pill" (click)="eliminarEspecialidad(especialidad)">
-              <i class="fas fa-minus"></i>
+        <div class="form-row">
+
+          <div class="form-group col-md-6">
+            <label for="correo">Correo</label>
+            <input type="email" class="form-control" formControlName="correo" [class.is-invalid]="correoNoValido">
+            <small class="text-danger" *ngIf="correoNoValido">Este campo no es válido</small>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label for="clave">Contraseña</label>
+            <input type="password" class="form-control" formControlName="clave" [class.is-invalid]="claveNoValida">
+            <small class="text-danger" *ngIf="claveNoValida">Este campo debe tener como mínimo 6 caracteres</small>
+          </div>
+
+        </div>
+
+        <div class="form-group">
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" formControlName="perfil" value="profesional" (change)="perfilSeleccionado($event)"> Profesional
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" formControlName="perfil" value="paciente" (change)="perfilSeleccionado($event)"> Paciente
+          </div>
+
+          <br />
+          <small class="text-danger" *ngIf="perfilNoValido">Este campo debe estar seleccionado</small>
+        </div>
+
+        <div class="row" *ngIf="esProfesional">
+          <div class="col">
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th>ID</th>
+                  <th>Especialidad</th>
+                  <th>Borrar</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="especialidades">
+                <tr *ngFor="let control of especialidades.controls; let i = index">
+                  <td> {{ i + 1 }} </td>
+                  <td>
+                    <input class="form-control"
+                          type="text"
+                          [formControlName]="i"
+                          [class.is-invalid]="especialidadNoValida(control)">
+                    <small class="text-danger" *ngIf="especialidadNoValida(control)">Este campo no debe estar vacio</small>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger"
+                            (click)="borrarEspecialidad(i)">
+                      Borrar
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="btn btn-primary mt-3 mb-5 btn-block"
+                    type="button"
+                    (click)="agregarEspecialidad()">
+              + Agregar
             </button>
-          </li>
-        </ul>
-        <input type="text" name="especialidad" id="especialidad" [(ngModel)]="especialidad" placeholder="Ingrese Especialidad" class="form-control rounded-pill">
-        <button class="btn btn-block btn-primary w-50 mt-3 mx-auto rounded-pill" (click)="agregarEspecialidad()">
-          <i class="fas fa-plus fa-2x"></i>
-        </button>
-      </div>
+          </div>
+        </div>
 
-      <div class="form-group mt-3" *ngIf="perfil === 'paciente'">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="fas fa-images"></i>
-          </span>
-          <div class="custom-file">
-            <input type="file" class="custom-file-input" multiple accept="image/*" (change)="imagenesSubidas($event)">
-            <label class="custom-file-label" for="inputGroupFile01">Haga click para subir imagenes</label>
+        <div class="form-group mt-3" *ngIf="esPaciente">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <i class="fas fa-images"></i>
+            </span>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" multiple accept="image/*" lang="es" (change)="subirImagenes($event)">
+              <label class="custom-file-label" for="inputGroupFile01">Haga click para subir imagenes</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="esPaciente">
+          <div class="col">
+            <div class="d-flex align-items-center justify-content-between">
+              <span>{{imagenes.length}} Imagenes subidas</span>
+              <button type="button" class="btn btn-danger" (click)="imagenes = []">Deshacer imagenes subidas &nbsp;<i class="fas fa-trash-alt"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col">
+            <button type="submit" class="btn btn-primary">Registrarse</button>
           </div>
         </div>
       </div>
-        
-      <div class="d-flex align-items-center justify-content-between" *ngIf="perfil === 'paciente'">
-        <span class="text-white">{{imagenes.length}} Imagenes subidas</span>
-        <button class="btn btn-danger rounded-pill" (click)="imagenes = []">Deshacer imagenes subidas &nbsp;<i class="fas fa-trash-alt"></i></button>
-      </div>
-
-      <div style="margin-top: 15px;">
-        <re-captcha #captcha (resolved)="captchaVerificado = true" [siteKey]="siteKey"></re-captcha>
-      </div>
+    </form>
+    <div class="card-footer">
+      <a routerLink="/iniciarSesion">Desea iniciar sesión?</a>
     </div>
   </div>
-  <div class="card-footer bg-primary">
-    <button type="submit" class="btn btn-secondary btn-block rounded-pill" [disabled]="enEspera" (click)="registrar()">
-      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="enEspera"></span>
-      {{enEspera?'Cargando. . .':'Registrarse'}}
-    </button> <br>
-    <a routerLink="/iniciarSesion" class="text-dark">Desea iniciar sesión?</a>
+
+  <div class="text-center animated fadeIn mt-5" *ngIf="enEspera">
+    <div class="col">
+      <i class="fa fa-sync fa-spin fa-5x"></i>
+    </div>
+    <div class="col mt-5 display-4">
+      Cargando espere un momento. . .
+    </div>
   </div>
 </div>
 
-<div class="alert alert-warning alert-dismissible fade" id="alert-form" role="alert">
-  <p id="alert-text"></p>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>

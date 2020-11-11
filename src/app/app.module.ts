@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 import { LoginComponent } from './components/login/login.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { ErrorComponent } from './components/error/error.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from './components/admin/admin.component';
 import { PacienteComponent } from './components/paciente/paciente.component';
 import { ProfesionalComponent } from './components/profesional/profesional.component';
@@ -69,7 +69,8 @@ import { ReseniaProfesionalModalComponent } from './components/resenia-profesion
     AngularFireStorageModule,
     RecaptchaModule,
     DpDatePickerModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

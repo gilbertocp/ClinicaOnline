@@ -14,6 +14,10 @@ export class ProfesionalService {
     return this.db.collection<Profesional>('profesionales').add(profesional);
   }
 
+  obtenerUnProfesional(docId: string): Observable<Profesional> {
+    return this.db.doc<Profesional>(docId).valueChanges();
+  }
+
   obtenerProfesionales(): Observable<Profesional[]> {
     return this.db.collection<Profesional>('profesionales', ref => ref.where('puedeAtender', '==', true)).valueChanges({idField: 'docId'});
   }
