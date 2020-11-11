@@ -17,6 +17,7 @@ const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
+    data: {animation: 'Login'}
   },
   {
     path: 'iniciarSesion',
