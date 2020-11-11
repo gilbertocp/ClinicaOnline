@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { ProfesionalService } from 'src/app/services/profesional.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,6 +21,8 @@ export class RegistroComponent implements OnInit {
   formulario: FormGroup;
   enEspera: boolean = false;
   imagenes: File[] = [];
+  siteKey = environment.captchaKey;
+  captchaVerificado: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -109,6 +112,15 @@ export class RegistroComponent implements OnInit {
     }
 
     const {perfil, especialidades} = this.formulario.value;
+
+    if(!this.captchaVerificado){  
+      Swal.fire({
+        title: 'Verifique el captcha primero',
+        icon: 'warning'
+      });
+
+      return;
+    }
 
     if(perfil === 'paciente' && this.imagenes.length !== 2) {
       Swal.fire({
