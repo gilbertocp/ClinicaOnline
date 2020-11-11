@@ -1,16 +1,17 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { Profesional } from '../../models/profesional';
 import { TurnosService } from '../../services/turnos.service';
 import { Turno } from '../../models/turno';
 import * as moment from 'moment';
 import { TurnoEstado } from 'src/app/models/turno-estado.enum';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-horas',
   templateUrl: './horas.component.html',
   styleUrls: ['./horas.component.scss']
 })
-export class HorasComponent implements OnInit {
+export class HorasComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() profesional: Profesional;
   @Input() fechaSeleccionada: moment.Moment;
@@ -18,14 +19,24 @@ export class HorasComponent implements OnInit {
   horaSeleccionadaBtn: HTMLButtonElement;
   turnos: Turno[];
   horas: moment.Moment[];
+  turnosSubscription: Subscription;
 
   constructor(private turnosSvc: TurnosService) { }
 
-  ngOnInit(): void {
-    this.turnosSvc.turnosProfesional(this.profesional.docId).subscribe(turnos => {
+  ngOnDestroy(): void {
+    this.turnosSubscription.unsubscribe();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.turnosSubscription = this.turnosSvc.turnosProfesional(this.profesional.docId).subscribe(turnos => {
       this.turnos = turnos;
       this.mostrarHorasDisponibles();
-    });
+
+      this.turnosSubscription.unsubscribe();
+    });  
+  }
+
+  ngOnInit(): void {
   }
 
   mostrarHorasDisponibles(): void {
@@ -35,13 +46,18 @@ export class HorasComponent implements OnInit {
     const minutoInicio = parseInt(this.profesional.horarioInicio.split(':')[1]);
 
     const horaSalida = parseInt(this.profesional.horarioSalida.split(':')[0]);
+    const minutoSalida = parseInt(this.profesional.horarioSalida.split(':')[1]);
 
-    for (let i = horaInicio; i < horaSalida; i++) {
-      this.horas.push(moment({hours: i, minutes: minutoInicio, seconds: 0}));
-      this.horas.push(moment({hours: i, minutes: minutoInicio + 30, seconds: 0}));
+    const hI = moment({hours: horaInicio, minutes: minutoInicio, seconds:0});
+    const hS = moment({hours: horaSalida, minutes: minutoSalida, seconds:0});
+    
+    for(const i = hI; hI < hS; i.add(30, 'minutes')) {
+      const aux = moment(i);
+      this.horas.push(aux);
     }
-
     this.horas = this.horas.filter(hora => !this.estaReservado(hora));
+
+    this.horas.forEach(h => console.log(h.format('HH:mm:ss')));
   }
 
   estaReservado(hora: moment.Moment): boolean {
