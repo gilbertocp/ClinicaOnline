@@ -1,8 +1,6 @@
-import { Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Profesional } from '../../models/profesional';
-import { TurnosService } from '../../services/turnos.service';
-import { Paciente } from '../../models/paciente';
 
 @Component({
   selector: 'app-pedir-turno-modal',
@@ -12,7 +10,8 @@ import { Paciente } from '../../models/paciente';
 export class PedirTurnoModalComponent implements OnInit {
 
   @ViewChild('modal') modal;
-  @Output() fechaHoraProfesionalSeleccionados = new EventEmitter();
+  @Output() fechaHoraProfesionalSeleccionados = new EventEmitter<{fecha: string, hora: string, docIdProfesional: string, 
+    nombreProfesional: string, apellidoProfesional: string, especialidades: string[]}>();
   profesional: Profesional;
   fechaSeleccionada: moment.Moment;
   horaSeleccionada: moment.Moment;
@@ -58,7 +57,8 @@ export class PedirTurnoModalComponent implements OnInit {
       hora: this.horaSeleccionada.format('HH:mm'),
       docIdProfesional: this.profesional.docId,
       nombreProfesional: this.profesional.nombre,
-      apellidoProfesional: this.profesional.apellido
+      apellidoProfesional: this.profesional.apellido,
+      especialidades: this.profesional.especialidades
     });
     this.cerrar();
   }

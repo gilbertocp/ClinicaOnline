@@ -12,7 +12,8 @@ export const animaciones =
   trigger('routeAnimations', [
     transition('Login => Registro', slideTo('right')),
     transition('Registro => Login', slideTo('left')),
-    transition('Login => Home', fade())
+    transition('Login => Home', fade()),
+    transition('Home => Login', fade())
   ]);
 
 

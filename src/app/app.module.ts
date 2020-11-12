@@ -33,6 +33,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { PedirTurnoModalComponent } from './components/pedir-turno-modal/pedir-turno-modal.component';
 import { ReseniaPacienteModalComponent } from './components/resenia-paciente-modal/resenia-paciente-modal.component';
 import { ReseniaProfesionalModalComponent } from './components/resenia-profesional-modal/resenia-profesional-modal.component';
+import { BusquedaTurnoComponent } from './components/busqueda-turno/busqueda-turno.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ReseniaProfesionalModalComponent } from './components/resenia-profesion
     PedirTurnoModalComponent,
     ReseniaPacienteModalComponent,
     ReseniaProfesionalModalComponent,
+    BusquedaTurnoComponent,
   ],
   imports: [
     BrowserModule,

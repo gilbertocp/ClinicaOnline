@@ -44,7 +44,7 @@
       </td>
       <td>
         <button [disabled]="turno.estado !== 4" *ngIf="!turno.reseniaProfesional" class="btn btn-block btn-success" (click)="dejarResenia(turno)">Dejar Reseña</button>
-        <button *ngIf="turno.reseniaProfesional" class="btn btn-block btn-success rounded-pill" (click)="verReseniaProfesionalCompletada(turno.reseniaProfesional)">
+        <button *ngIf="turno.reseniaProfesional" class="btn btn-block btn-success" (click)="verReseniaProfesionalCompletada(turno.reseniaProfesional)">
           Ver mi reseña
         </button>
       </td>

@@ -15,10 +15,12 @@ export class TurnosService {
 
   constructor(private db: AngularFirestore) { }
 
+  // Agrega a la colección de turnos un turno nuevo
   agregarTurno(turno: Turno): Promise<DocumentReference> {
     return this.db.collection<Turno>('turnos').add(turno);
   }
 
+  // Consulta por los turnos vigentes de un determinado paciente
   turnosPaciente(docId: string): Observable<Turno[]> {
     return this.db
     .collection<Turno>(
@@ -31,6 +33,7 @@ export class TurnosService {
     .pipe(map(turnos => turnos.map(turno => this.verificarTurnoFinalizado(turno))));
   }
 
+  // Consulta por los turnos en donde se ve involucrado un determinado profesional
   turnosProfesional(docId: string): Observable<Turno[]> {
     return this.db.collection<Turno>('turnos',
     ref => ref.where('docIdProfesional', '==', docId).orderBy('fecha', 'desc'))
@@ -38,6 +41,7 @@ export class TurnosService {
     .pipe(map(turnos => turnos.map(turno => this.verificarTurnoFinalizado(turno))));
   }
 
+  // Consulta por los turnos "pasados" (Cancelado por el paciente, Cancelado por el profesional o Finalizado)
   turnosPacientesPasados(docId: string): Observable<Turno[]> {
     return this.db
     .collection<Turno>('turnos',
@@ -46,16 +50,19 @@ export class TurnosService {
     .valueChanges({idField: 'docId'});
   }
 
+  // Cuando el profesional aceptar el turno
   confirmarTurno(docId: string): void {
     this.db.collection<Turno>('turnos').doc(docId).set({estado: TurnoEstado.confirmado}, {merge: true});
   }
 
+  // Cuando el profesional rechaza el turno
   cancelarTurnoProfesional(docId: string, resenia: string): void {
     this.db.collection<Turno>('turnos').doc(docId)
     .set({motivoRechazo: resenia, estado: TurnoEstado.rechazadoProfesional},
     {merge: true});
   }
 
+  // Cuando el paciente cancela su turno
   cancelarTurnoPaciente(docId: string): void {
     this.db.collection<Turno>('turnos').doc(docId).set({estado: TurnoEstado.canceladoPaciente}, {merge: true});
   }
@@ -72,6 +79,7 @@ export class TurnosService {
     this.db.collection<Turno>('turnos').doc(docId).set({estado: TurnoEstado.finalizado}, {merge: true});
   }
 
+  // Finaliza un turno 
   private finDelTurno(docId: string): void {
     this.db.collection<Turno>('turnos').doc(docId).set({estado: TurnoEstado.finalizado}, {merge: true});
   }

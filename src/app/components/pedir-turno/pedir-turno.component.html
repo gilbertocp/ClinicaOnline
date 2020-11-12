@@ -1,5 +1,13 @@
-<app-filtro-profesionales *ngIf="profesionales" [profesionales]="profesionales" (profesionalesFiltrados)="filtroProfesionales($event)"></app-filtro-profesionales>
-<div class="table-responsive">
+<!-- barra para filtrar de profesionales -->
+<app-filtro-profesionales *ngIf="profesionales" 
+                          [profesionales]="profesionales" 
+                          (profesionalesFiltrados)="filtroProfesionales($event)"
+                          >
+</app-filtro-profesionales>
+
+
+<!-- listado profesionales disponibles -->
+<div class="table-responsive" *ngIf="turnosPacienteActual">
   <table class="table table-light table-striped table-hover text-center">
     <thead class="thead-dark">
       <tr>
@@ -29,8 +37,9 @@
           <button
             class="btn btn-primary btn-block"
             (click)="pedirTurno(profesional)"
+            [disabled]="verificarPorTurnoRealizado(profesional.docId)"
           >
-            Pedir Turno
+            {{verificarPorTurnoRealizado(profesional.docId)? 'Turno Pedido':'Pedir Turno'}}
           </button>
         </td>
       </tr>
@@ -38,4 +47,12 @@
   </table>
 </div>
 
+<!-- spinner -->
+<div class="row text-center animated fadeIn mt-5" *ngIf="!profesionales || !turnosPacienteActual">
+  <div class="col">
+    <i class="fa fa-sync fa-spin fa-5x"></i>
+  </div>
+</div>
+
+<!-- pedir turno modal -->
 <app-pedir-turno-modal #pedirTurnoModal (fechaHoraProfesionalSeleccionados)="sacarTurno($event)"></app-pedir-turno-modal>

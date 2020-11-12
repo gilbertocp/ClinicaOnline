@@ -1,7 +1,6 @@
 <table class="table table-light text-center" *ngIf="turnosPasados">
   <thead class="thead-dark">
-    <th scope="col">Paciente</th>
-    <th scope="col">Especialista</th>
+    <th scope="col">Médico</th>
     <th scope="col">Hora</th>
     <th scope="col">Fecha</th>
     <th scope="col">Estado</th>
@@ -10,7 +9,6 @@
   </thead>
   <tbody>
     <tr *ngFor="let turno of turnosPasados">
-      <td>{{turno.nombrePaciente}}, {{turno.apellidoPaciente}}</td>
       <td>{{turno.nombreProfesional}}, {{turno.apellidoProfesional}}</td>
       <td>{{ turno.hora }}</td>
       <td>{{ turno.fecha }}</td>
