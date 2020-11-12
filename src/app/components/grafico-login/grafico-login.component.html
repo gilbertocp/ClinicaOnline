@@ -1,0 +1,12 @@
+<div>
+  <div>
+    <div style="display: block;background-color: white;" *ngIf="loginProfesionalesData">
+      <canvas baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [chartType]="barChartType">
+      </canvas>
+    </div>
+  </div>
+</div>

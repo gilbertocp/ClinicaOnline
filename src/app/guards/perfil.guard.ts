@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,6 +13,7 @@ export class PerfilGuard implements CanActivate {
   constructor(
     private authSvc: AuthService,
     private router: Router,
+    private db: AngularFirestore
   ) { }
 
   canActivate(): Observable<boolean>{
@@ -27,6 +29,7 @@ export class PerfilGuard implements CanActivate {
           break;
 
         case 'profesional':
+          this.db.collection('loginProfesionales').add({fechaYHora: new Date()});
           this.router.navigate(['perfil/profesional']);
           break;
 

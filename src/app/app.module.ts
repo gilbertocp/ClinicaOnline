@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,11 +24,11 @@ import { TurnosPacienteDetallesComponent } from './components/turnos-paciente-de
 import { TurnosPasadosDetalleComponent } from './components/turnos-pasados-detalle/turnos-pasados-detalle.component';
 import { TurnosProfesionalDetallesComponent } from './components/turnos-profesional-detalles/turnos-profesional-detalles.component';
 import { EstadoTurnoPipe } from './pipes/estado-turno.pipe';
-import {DpDatePickerModule} from 'ng2-date-picker';
+import { DpDatePickerModule } from 'ng2-date-picker';
 import { HorasComponent } from './components/horas/horas.component';
 import { FechasComponent } from './components/fechas/fechas.component';
 import { FiltroProfesionalesComponent } from './components/filtro-profesionales/filtro-profesionales.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PedirTurnoModalComponent } from './components/pedir-turno-modal/pedir-turno-modal.component';
 import { ReseniaPacienteModalComponent } from './components/resenia-paciente-modal/resenia-paciente-modal.component';
 import { ReseniaProfesionalModalComponent } from './components/resenia-profesional-modal/resenia-profesional-modal.component';
@@ -37,6 +36,11 @@ import { BusquedaTurnoComponent } from './components/busqueda-turno/busqueda-tur
 import { AltaAdministradorComponent } from './components/alta-administrador/alta-administrador.component';
 import { SolicitudesAprobacionProfesionalComponent } from './components/solicitudes-aprobacion-profesional/solicitudes-aprobacion-profesional.component';
 import { TurnosAdministradorDetallesComponent } from './components/turnos-administrador-detalles/turnos-administrador-detalles.component';
+import { GraficosComponent } from './components/graficos/graficos.component';
+import { ChartsModule } from 'ng2-charts';
+import { GraficoLoginComponent } from './components/grafico-login/grafico-login.component';
+import { GraficoOperacionesEspecialidadComponent } from './components/grafico-operaciones-especialidad/grafico-operaciones-especialidad.component';
+import { GraficoTurnosDiasDeLaSemanaComponent } from './components/grafico-turnos-dias-de-la-semana/grafico-turnos-dias-de-la-semana.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +69,10 @@ import { TurnosAdministradorDetallesComponent } from './components/turnos-admini
     AltaAdministradorComponent,
     SolicitudesAprobacionProfesionalComponent,
     TurnosAdministradorDetallesComponent,
+    GraficosComponent,
+    GraficoLoginComponent,
+    GraficoOperacionesEspecialidadComponent,
+    GraficoTurnosDiasDeLaSemanaComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,7 +86,8 @@ import { TurnosAdministradorDetallesComponent } from './components/turnos-admini
     RecaptchaModule,
     DpDatePickerModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
