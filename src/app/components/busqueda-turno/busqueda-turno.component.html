@@ -2,8 +2,8 @@
   <div class="input-group-prepend">
     <select class="custom-select" 
             name="condicion" 
-            [(ngModel)]="condicion" 
-            (change)="cambiarFiltro()">
+            [(ngModel)]="condicion"
+            (change)="filtroCambiado()">
 
       <option value="todos">Todos</option>
       <option value="paciente">Paciente</option>
@@ -14,7 +14,20 @@
   </div>
 
   <input type="text" 
+        #textBox
         class="form-control"
+        *ngIf="condicion !== 'especialidad'"
         [disabled]="condicion === 'todos'"
-        [placeholder]="textoPlaceholder">
+        [placeholder]="textoPlaceholder"
+        (keyup)="filtrar(textBox.value)"
+        >
+
+  <select *ngIf="condicion === 'especialidad'" 
+          #especialidad name="filtro" 
+          placeholder="Seleccione una especialidad" 
+          class="custom-select" 
+          (change)="filtrar(especialidad.value)"
+          >
+    <option *ngFor="let e of especialidades" [value]="e" selected>{{e}}</option>
+  </select>
 </div>

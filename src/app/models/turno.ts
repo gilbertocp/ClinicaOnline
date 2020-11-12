@@ -15,5 +15,6 @@ export interface Turno {
   nombreProfesional: string,
   apellidoProfesional: string,
   nombrePaciente: string,
-  apellidoPaciente: string
+  apellidoPaciente: string,
+  especialidades: string[]
 }

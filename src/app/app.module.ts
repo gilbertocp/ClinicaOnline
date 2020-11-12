@@ -36,6 +36,7 @@ import { ReseniaProfesionalModalComponent } from './components/resenia-profesion
 import { BusquedaTurnoComponent } from './components/busqueda-turno/busqueda-turno.component';
 import { AltaAdministradorComponent } from './components/alta-administrador/alta-administrador.component';
 import { SolicitudesAprobacionProfesionalComponent } from './components/solicitudes-aprobacion-profesional/solicitudes-aprobacion-profesional.component';
+import { TurnosAdministradorDetallesComponent } from './components/turnos-administrador-detalles/turnos-administrador-detalles.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { SolicitudesAprobacionProfesionalComponent } from './components/solicitu
     BusquedaTurnoComponent,
     AltaAdministradorComponent,
     SolicitudesAprobacionProfesionalComponent,
+    TurnosAdministradorDetallesComponent,
   ],
   imports: [
     BrowserModule,

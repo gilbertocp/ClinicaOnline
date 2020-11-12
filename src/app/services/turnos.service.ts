@@ -15,6 +15,11 @@ export class TurnosService {
 
   constructor(private db: AngularFirestore) { }
 
+  // Traer todos los turnos
+  get turnos(): Observable<Turno[]> {
+    return this.db.collection<Turno>('turnos').valueChanges();
+  }
+
   // Agrega a la colección de turnos un turno nuevo
   agregarTurno(turno: Turno): Promise<DocumentReference> {
     return this.db.collection<Turno>('turnos').add(turno);

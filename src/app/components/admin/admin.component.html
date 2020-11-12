@@ -3,7 +3,7 @@
 <div class="container-fluid">
   <ul class="nav nav-pills nav-fill bg-secondary text-white mt-3">
     <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#solicitudes"
+      <a class="nav-link" data-toggle="tab" href="#solicitudes"
         >Solicitudes</a
       >
     </li>
@@ -12,15 +12,24 @@
         >Alta Administrador</a
       >
     </li>
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#turnos"
+        >Turnos</a
+      >
+    </li>
   </ul>
 
   <div class="tab-content">
-    <div class="tab-pane fade active show" id="solicitudes">
+    <div class="tab-pane fade" id="solicitudes">
     <app-solicitudes-aprobacion-profesional></app-solicitudes-aprobacion-profesional>
     </div>
 
     <div class="tab-pane fade" id="admin-form">
       <app-alta-administrador></app-alta-administrador>
     </div>
+
+    <li class="tab-pane fade active show" id="turnos">
+      <app-turnos-administrador-detalles></app-turnos-administrador-detalles>
+    </li>
   </div>
 </div>

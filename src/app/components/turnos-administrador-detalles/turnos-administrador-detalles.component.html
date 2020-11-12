@@ -1,0 +1,50 @@
+<app-busqueda-turno *ngIf="turnos" 
+                    [turnos]="turnos"
+                    (turnosFiltrados)="filtroTurnos($event)"
+                    >
+</app-busqueda-turno>
+
+<table class="table table-dark text-center" *ngIf="turnosVista">
+  <thead>
+    <th scope="col">Fecha</th>
+    <th scope="col">Paciente</th>
+    <th scope="col">Médico</th>
+    <th scope="col">Especialidad</th>
+    <th scope="col">Estado</th>
+    <th scope="col">Reseña Paciente</th>
+    <th scope="col">Reseña Médico</th>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let turno of turnosVista">
+      <td>{{turno.fecha}}</td>
+      <td>{{turno.nombrePaciente}}, {{turno.apellidoPaciente}}</td>
+      <td>{{turno.nombreProfesional}}, {{turno.apellidoProfesional}}</td>
+      <td>{{turno.especialidades}}</td>
+      <td>{{turno.estado | estadoTurno}}</td>
+      <td>
+        <button class="btn btn-primary btn-block" 
+                *ngIf="turno.reseniaPaciente else pacienteSinResenia"
+                (click)="verReseniaPacienteCompletada(turno.reseniaPaciente)"
+                >
+                Ver reseña</button>
+        <ng-template #pacienteSinResenia>
+          <p class="text-center">No ha dejado ninguna reseña aún</p>
+        </ng-template>
+      </td>
+      <td>
+        <button class="btn btn-info btn-block" 
+                *ngIf="turno.reseniaProfesional else profesionalSinResenia"
+                (click)="verReseniaProfesionalCompletada(turno.reseniaProfesional)"
+                >
+                Ver reseña</button>
+        <ng-template #profesionalSinResenia>
+          <p class="text-center">No ha dejado ninguna reseña aún</p>
+        </ng-template>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<app-resenia-paciente-modal #reseniaPacienteModal></app-resenia-paciente-modal>
+<app-resenia-profesional-modal #reseniaProfesionalModal></app-resenia-profesional-modal>

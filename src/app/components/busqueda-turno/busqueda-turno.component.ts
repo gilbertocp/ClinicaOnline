@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Turno } from 'src/app/models/turno';
 
 @Component({
   selector: 'app-busqueda-turno',
@@ -7,11 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BusquedaTurnoComponent implements OnInit {
 
+  @Input() turnos: Turno[];
+  @Output() turnosFiltrados = new EventEmitter<Turno[]>();
   condicion: string = 'todos';
+  especialidades: string[];
 
   constructor() { }
 
   ngOnInit(): void {
+    this.setearEspecialidades();
   }
 
   get textoPlaceholder(): string {
@@ -30,15 +35,69 @@ export class BusquedaTurnoComponent implements OnInit {
         placeholder = 'Ingrese nombre o apellido del médico';
       break;
 
+      case 'especialidad':
+        placeholder = 'Ingrese especialidad del médico';
+      break;
+
       case 'fecha':
-        placeholder = 'Ingrese fecha del turno';
+        placeholder = 'DD/MM/YYYY';
       break;
     }
 
     return placeholder;
   }
 
-  cambiarFiltro(): void {
+  filtroCambiado(): void {
+    if(this.condicion === 'todos') {
+      this.filtrar('todos');
+    }
+  }
 
+  setearEspecialidades(): void {
+    this.especialidades = [];
+
+    this.turnos.forEach(t => {
+      t.especialidades.forEach(e => {
+        if(!this.especialidades.includes(e)) {
+          this.especialidades.push(e);
+        }
+      });
+    });
+  }
+
+  filtrar(filtro: string): void {
+    let turnosFiltrados: Turno[] = [];
+
+    switch(this.condicion) {
+      case 'todos':
+        turnosFiltrados = this.turnos;
+      break;
+
+      case 'paciente':
+        turnosFiltrados = this.turnos.filter(t => {
+          return t.apellidoPaciente.toLowerCase().indexOf(filtro.toLowerCase()) > -1 ||
+                t.nombrePaciente.toLowerCase().indexOf(filtro.toLowerCase()) > -1;
+        });
+      break;
+
+      case 'medico':
+        turnosFiltrados = this.turnos.filter(t => {
+          return t.nombreProfesional.toLowerCase().indexOf(filtro.toLowerCase()) > -1 ||
+                t.apellidoProfesional.toLowerCase().indexOf(filtro.toLowerCase()) > -1;
+        });
+      break;
+
+      case 'especialidad':
+        turnosFiltrados = this.turnos.filter(p => p.especialidades.includes(filtro));
+      break;
+
+      case 'fecha':
+        turnosFiltrados = this.turnos.filter(t => {
+          return t.fecha.indexOf(filtro) > -1
+        });
+      break;
+    }  
+  
+    this.turnosFiltrados.emit(turnosFiltrados);
   }
 }
