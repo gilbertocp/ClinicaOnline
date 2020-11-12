@@ -34,6 +34,8 @@ import { PedirTurnoModalComponent } from './components/pedir-turno-modal/pedir-t
 import { ReseniaPacienteModalComponent } from './components/resenia-paciente-modal/resenia-paciente-modal.component';
 import { ReseniaProfesionalModalComponent } from './components/resenia-profesional-modal/resenia-profesional-modal.component';
 import { BusquedaTurnoComponent } from './components/busqueda-turno/busqueda-turno.component';
+import { AltaAdministradorComponent } from './components/alta-administrador/alta-administrador.component';
+import { SolicitudesAprobacionProfesionalComponent } from './components/solicitudes-aprobacion-profesional/solicitudes-aprobacion-profesional.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { BusquedaTurnoComponent } from './components/busqueda-turno/busqueda-tur
     ReseniaPacienteModalComponent,
     ReseniaProfesionalModalComponent,
     BusquedaTurnoComponent,
+    AltaAdministradorComponent,
+    SolicitudesAprobacionProfesionalComponent,
   ],
   imports: [
     BrowserModule,

@@ -16,81 +16,11 @@
 
   <div class="tab-content">
     <div class="tab-pane fade active show" id="solicitudes">
-      <div class="col-12 mt-3">
-        <ul class="list-group">
-          <li class="list-group-item" *ngFor="let solicitud of solicitudes">
-            <p class="text-left">{{ solicitud.correo }}</p>
-            <p class="text-muted text-left">
-              Recibido el {{ solicitud.fecha.toDate() | date: "short" }}
-            </p>
-            <button
-              class="btn btn btn-primary"
-              (click)="aprobarSolicitud(solicitud)"
-            >
-              Aceptar
-            </button>
-            <button
-              class="btn btn btn-danger"
-              (click)="rechazarSolicitud(solicitud)"
-            >
-              Rechazar
-            </button>
-          </li>
-        </ul>
-      </div>
+    <app-solicitudes-aprobacion-profesional></app-solicitudes-aprobacion-profesional>
     </div>
 
     <div class="tab-pane fade" id="admin-form">
-      <div class="card" style="height: 300px">
-        <div class="card-body">
-          <form action="" class="container">
-            <h2 class="text-center">Registro Administrador</h2>
-            <div class="form-group">
-              <input
-                #correo
-                type="text"
-                placeholder="Ingrese correo"
-                class="form-control rounded-pill"
-              />
-            </div>
-            <div class="form-group">
-              <input
-                #clave
-                type="password"
-                placeholder="Ingrese clave"
-                class="form-control rounded-pill"
-              />
-            </div>
-          </form>
-          <div class="card-footer container">
-            <button
-              class="btn btn-block btn-primary"
-              [disabled]="enEspera"
-              (click)="registrarAdministrador(correo.value, clave.value)"
-            >
-              <span
-                class="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-                *ngIf="enEspera"
-              ></span>
-              {{ enEspera ? "Cargando. . ." : "Registrar" }}
-            </button>
-          </div>
-        </div>
-      </div>
+      <app-alta-administrador></app-alta-administrador>
     </div>
   </div>
-</div>
-
-<!-- alert -->
-<div
-  class="alert alert-warning alert-dismissible fade"
-  id="alert-form"
-  role="alert"
->
-  <p id="alert-text"></p>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
 </div>

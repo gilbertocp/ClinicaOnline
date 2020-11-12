@@ -1,0 +1,28 @@
+<div class="col-12 mt-3">
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let solicitud of solicitudes">
+      <p class="text-left">{{ solicitud.correo }}</p>
+      <p class="text-muted text-left">
+        Recibido el {{ solicitud.fecha.toDate() | date: "short" }}
+      </p>
+      <button
+        class="btn btn btn-primary"
+        (click)="aprobarSolicitud(solicitud)"
+      >
+        Aceptar
+      </button>
+      <button
+        class="btn btn btn-danger"
+        (click)="rechazarSolicitud(solicitud)"
+      >
+        Rechazar
+      </button>
+    </li>
+  </ul>
+  <div
+    class="alert alert-primary fade show"
+    *ngIf="solicitudes.length === 0"
+  >
+    <p class="text-center">No hay solicitudes que mostrar</p>
+  </div>
+</div>
