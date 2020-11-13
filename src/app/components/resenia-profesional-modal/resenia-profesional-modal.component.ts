@@ -49,6 +49,7 @@ export class ReseniaProfesionalModalComponent implements OnInit {
       this.edad = null; 
       this.presion = null; 
       this.temperatura = null;
+      this.soloLectura = false;
     });
   }
 

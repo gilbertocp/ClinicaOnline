@@ -46,6 +46,12 @@ export class ReseniaPacienteModalComponent implements OnInit {
     this.modalSvc.open(this.modal, {
       backdrop: 'static',
       keyboard: false
+    }).result.catch(() => {
+      this.profesionalPuntaje = null;
+      this.instalacionesPuntaje = null;
+      this.sugerenciaATerceros = null;
+      this.feedBack = null;
+      this.soloLectura = false;
     });
   }
 
