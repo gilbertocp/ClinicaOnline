@@ -21,8 +21,6 @@ export class RegistroComponent implements OnInit {
   formulario: FormGroup;
   enEspera: boolean = false;
   imagenes: File[] = [];
-  siteKey = environment.captchaKey;
-  captchaVerificado: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -113,14 +111,6 @@ export class RegistroComponent implements OnInit {
 
     const {perfil, especialidades} = this.formulario.value;
 
-    if(!this.captchaVerificado){  
-      Swal.fire({
-        title: 'Verifique el captcha primero',
-        icon: 'warning'
-      });
-
-      return;
-    }
 
     if(perfil === 'paciente' && this.imagenes.length !== 2) {
       Swal.fire({

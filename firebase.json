@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "predeploy": "ng build",
+    "predeploy": "npm run build",
     "public": "dist/ClinicaOnline",
     "ignore": [
       "firebase.json",

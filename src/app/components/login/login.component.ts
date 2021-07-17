@@ -70,14 +70,14 @@ export class LoginComponent implements OnInit {
 
       case 'profesional':
         this.formulario.setValue({
-          correo: 'micorreo@gmail.com',
-          clave: '222222'
+          correo: 'juanmartinez@clinicaonline.com',
+          clave: '111111'
         }) ;
         break;
 
       case 'paciente':
         this.formulario.setValue({
-          correo:'iloppalledd-3751@yopmail.com',
+          correo:'alt.c4-5slxvmq@yopmail.com',
           clave: '111111'
         });
         break;

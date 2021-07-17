@@ -36,7 +36,7 @@ function fade() {
   ];
 }
 
-function slideTo(direction) {
+function slideTo(direction: 'right' | 'left') {
   const optional = {optional: true};
   return [
     query(':enter, :leave', [
